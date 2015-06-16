@@ -48,6 +48,8 @@ POST_INSTALL = :
 NORMAL_UNINSTALL = :
 PRE_UNINSTALL = :
 POST_UNINSTALL = :
+build_triplet = x86_64-unknown-linux-gnu
+host_triplet = x86_64-unknown-linux-gnu
 bin_PROGRAMS = lspider$(EXEEXT) lspider_client$(EXEEXT) \
 	parse_url$(EXEEXT)
 subdir = .
@@ -57,6 +59,11 @@ DIST_COMMON = $(srcdir)/Makefile.in $(srcdir)/Makefile.am \
 	install-sh missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
 am__aclocal_m4_deps = $(top_srcdir)/aclocal/ax_qt5.m4 \
+	$(top_srcdir)/aclocal/ax_mongo_client.m4 \
+	$(top_srcdir)/aclocal/ax_libevent.m4 \
+	$(top_srcdir)/aclocal/ax_thrift.m4 \
+	$(top_srcdir)/aclocal/ax_boost.m4 \
+	$(top_srcdir)/aclocal/ax_log4cplus.m4 \
 	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
@@ -191,6 +198,8 @@ AUTOCONF = ${SHELL} /home/lichuang/setups/lspider/missing autoconf
 AUTOHEADER = ${SHELL} /home/lichuang/setups/lspider/missing autoheader
 AUTOMAKE = ${SHELL} /home/lichuang/setups/lspider/missing automake-1.13
 AWK = gawk
+BOOST_CPPFLAGS = -I/usr/include
+BOOST_LDFLAGS = -L/usr/lib64
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
@@ -214,15 +223,21 @@ INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
 INSTALL_STRIP_PROGRAM = $(install_sh) -c -s
 LDFLAGS = 
+LIBEVENT_CPPFLAGS = -I/home/lichuang/libevent/include/
+LIBEVENT_LDFLAGS = -L/home/lichuang/libevent/lib/
 LIBOBJS = 
-LIBS = $(QT_LDFLAGS)/ -lQtCore -lQtGui -lQtWebKit -lQtNetwork -lQtSql \
-				$(MONGOCLIENT_LDFLAGS) -lmongoclient $(LIBEVENT_LDFLAGS) -levent -levent_pthreads \
-				$(BOOST_LDFLAGS) -lboost_system -lboost_thread -lboost_filesystem -lboost_program_options -lboost_regex $(LOG4CPLUS_LDFLAGS) -llog4cplus \
+LIBS = $(QT_LDFLAGS)/ -lQt5Core -lQt5Widgets -lQt5WebKit -lQt5WebKitWidgets -lQt5Network -lQt5Sql \
+				$(MONGO_CLIENT_LDFLAGS) -lmongoclient $(LIBEVENT_LDFLAGS) -levent -levent_core -levent_extra -levent_pthreads \
+				$(BOOST_LDFLAGS) -lboost_system -lboost_thread-mt -lboost_filesystem -lboost_program_options -lboost_regex $(LOG4CPLUS_LDFLAGS) -llog4cplus \
 				$(THRIFT_LDFLAGS) -lthrift -lz -lpthread
 
+LOG4CPLUS_CPPFLAGS = -I/usr/include/
+LOG4CPLUS_LDFLAGS = -L/usr/lib64/
 LTLIBOBJS = 
 MAKEINFO = ${SHELL} /home/lichuang/setups/lspider/missing makeinfo
 MKDIR_P = /bin/mkdir -p
+MONGO_CLIENT_CPPFLAGS = -I/home/lichuang/mongo-client/include/
+MONGO_CLIENT_LDFLAGS = -L/home/lichuang/mongo-client/lib/
 OBJEXT = o
 PACKAGE = lspider
 PACKAGE_BUGREPORT = whlichuang@126.com
@@ -232,9 +247,13 @@ PACKAGE_TARNAME = lspider
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.1
 PATH_SEPARATOR = :
+QT_CPPFLAGS = -I/usr/include/qt5/
+QT_LDFLAGS = -L/usr/lib64/
 SET_MAKE = 
 SHELL = /bin/sh
 STRIP = 
+THRIFT_CPPFLAGS = -I/home/lichuang/thrift/include/
+THRIFT_LDFLAGS = -L/home/lichuang/thrift/lib/
 VERSION = 0.1
 abs_builddir = /home/lichuang/setups/lspider
 abs_srcdir = /home/lichuang/setups/lspider
@@ -248,14 +267,22 @@ am__quote =
 am__tar = $${TAR-tar} chof - "$$tardir"
 am__untar = $${TAR-tar} xf -
 bindir = ${exec_prefix}/bin
+build = x86_64-unknown-linux-gnu
 build_alias = 
+build_cpu = x86_64
+build_os = linux-gnu
+build_vendor = unknown
 builddir = .
 datadir = ${datarootdir}
 datarootdir = ${prefix}/share
 docdir = ${datarootdir}/doc/${PACKAGE_TARNAME}
 dvidir = ${docdir}
 exec_prefix = ${prefix}
+host = x86_64-unknown-linux-gnu
 host_alias = 
+host_cpu = x86_64
+host_os = linux-gnu
+host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
@@ -285,14 +312,14 @@ lspider_SOURCES = src/main.cpp src/conf.cpp src/extractor_worker_view.cpp src/lc
 				src/CrawlService.cpp src/http_processor.cpp src/link_scheduler.cpp src/moc_mysql_selector.cpp src/mysql_selector.cpp src/util.cpp \
 				src/extractor.cpp src/http_protocol.cpp src/link_table.cpp src/moc_extractor_worker_view.cpp src/mongo_dumper.cpp src/request_recv.cpp
 
-lspider_CPPFLAGS = $(QT_CPPFLAGS)/QtGui $(QT_CPPFLAGS)/QtSql $(QT_CPPFLAGS)/QtCore \
-				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(MONGOCLIENT_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
-				 $(QT_CPPFLAGS)/QtWebKit $(THRIFT_CPPFLAGS)
+lspider_CPPFLAGS = $(QT_CPPFLAGS) $(MONGO_CLIENT_CPPFLAGS) \
+				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
+				 $(QT_CPPFLAGS)/QtWebKit $(THRIFT_CPPFLAGS) -fPIC
 
 lspider_client_SOURCES = src/lspider_client.cpp src/lcrawler_constants.cpp src/CrawlService.cpp src/lcrawler_types.cpp src/url_context.cpp src/logger_container.cpp src/url_tools.cpp src/util.cpp
-lspider_client_CPPFLAGS = $(QT_CPPFLAGS)/QtGui $(QT_CPPFLAGS)/QtSql $(QT_CPPFLAGS)/QtCore \
-				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(MONGOCLIENT_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
-				 $(QT_CPPFLAGS)/QtWebKit $(THRIFT_CPPFLAGS)
+lspider_client_CPPFLAGS = $(QT_CPPFLAGS) $(MONGO_CLIENT_CPPFLAGS) \
+				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
+				 $(QT_CPPFLAGS)/QtWebKit $(THRIFT_CPPFLAGS) -fPIC
 
 parse_url_SOURCES = src/parse_url.cpp src/url_tools.cpp
 all: config.h

@@ -5,7 +5,7 @@
 #define HAVE_ARPA_INET_H 1
 
 /* define if the Boost library is available */
-/* #undef HAVE_BOOST */
+#define HAVE_BOOST /**/
 
 /* Define to 1 if you have the `bzero' function. */
 #define HAVE_BZERO 1
@@ -19,12 +19,6 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #define HAVE_INTTYPES_H 1
 
-/* define if the libevent library is available */
-/* #undef HAVE_LIBEVENT */
-
-/* define if the log4cplus library is available */
-/* #undef HAVE_LOG4CPLUS */
-
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
 #define HAVE_MALLOC 1
@@ -35,17 +29,11 @@
 /* Define to 1 if you have the `memset' function. */
 #define HAVE_MEMSET 1
 
-/* define if the mongoclient library is available */
-/* #undef HAVE_MONGOCLIENT */
-
 /* Define to 1 if you have the <netdb.h> header file. */
 #define HAVE_NETDB_H 1
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
 #define HAVE_NETINET_IN_H 1
-
-/* define if the qt library is available */
-/* #undef HAVE_QT */
 
 /* Define to 1 if you have the `select' function. */
 #define HAVE_SELECT 1
@@ -88,9 +76,6 @@
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #define HAVE_SYS_TYPES_H 1
-
-/* define if the thrift library is available */
-/* #undef HAVE_THRIFT */
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #define HAVE_UNISTD_H 1

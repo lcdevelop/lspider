@@ -10,8 +10,8 @@
 
 #include <string>
 #include <map>
-#include <QThread>
-#include <QSqlDatabase>
+#include <QtCore/QThread>
+#include <QtSql/QSqlDatabase>
 #include "synced_queue.h"
 #include "DoubleList.h"
 #include "mysql_base.h"

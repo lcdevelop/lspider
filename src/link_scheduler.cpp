@@ -45,7 +45,7 @@ void LinkScheduler::run()
     _base = event_base_new();
 
     _printStateEvent = evtimer_new(_base, on_print_state, this);
-    struct timeval t = {.tv_sec = Conf::instance()->schedulerPrintStateInterval, .tv_usec = 0 };
+    struct timeval t = {Conf::instance()->schedulerPrintStateInterval, 0 };
     evtimer_add(_printStateEvent, &t);
 
     event_base_dispatch(_base);
@@ -67,7 +67,7 @@ bool LinkScheduler::addIpSchedule(IpContext *ipContext)
 {
     struct event *ipScheduleEvent = evtimer_new(_base, on_ip_schedule, ipContext);
     ipContext->ipScheduleEvent = ipScheduleEvent;
-    struct timeval t = {.tv_sec = ipContext->scheduleInterval, .tv_usec = 0 };
+    struct timeval t = {ipContext->scheduleInterval, 0 };
     evtimer_add(ipScheduleEvent, &t);
     return true;
 }
@@ -88,7 +88,7 @@ void LinkScheduler::on_ip_schedule(evutil_socket_t sock, short event, void *arg)
     // select()可能delete掉ipContext
     if (!isIpContextObsolete) {
         struct event *ipScheduleEvent = ipContext->ipScheduleEvent;
-        struct timeval t = {.tv_sec = ipContext->scheduleInterval, .tv_usec = 0 };
+        struct timeval t = {ipContext->scheduleInterval, 0 };
         evtimer_add(ipScheduleEvent, &t);
     }
 }
@@ -98,6 +98,6 @@ void LinkScheduler::on_print_state(evutil_socket_t sock, short event, void *arg)
     LinkScheduler *linkScheduler = (LinkScheduler*)arg;
     LOG_F(INFO, "on_print_state table count=%d", linkScheduler->_linkTable.count());
     linkScheduler->_linkTable.printState();
-    struct timeval t = {.tv_sec = Conf::instance()->schedulerPrintStateInterval, .tv_usec = 0 };
+    struct timeval t = {Conf::instance()->schedulerPrintStateInterval, 0 };
     evtimer_add(linkScheduler->_printStateEvent, &t);
 }

@@ -18,12 +18,6 @@
 /* Define to 1 if you have the <inttypes.h> header file. */
 #undef HAVE_INTTYPES_H
 
-/* define if the libevent library is available */
-#undef HAVE_LIBEVENT
-
-/* define if the log4cplus library is available */
-#undef HAVE_LOG4CPLUS
-
 /* Define to 1 if your system has a GNU libc compatible `malloc' function, and
    to 0 otherwise. */
 #undef HAVE_MALLOC
@@ -34,17 +28,11 @@
 /* Define to 1 if you have the `memset' function. */
 #undef HAVE_MEMSET
 
-/* define if the mongoclient library is available */
-#undef HAVE_MONGOCLIENT
-
 /* Define to 1 if you have the <netdb.h> header file. */
 #undef HAVE_NETDB_H
 
 /* Define to 1 if you have the <netinet/in.h> header file. */
 #undef HAVE_NETINET_IN_H
-
-/* define if the qt library is available */
-#undef HAVE_QT
 
 /* Define to 1 if you have the `select' function. */
 #undef HAVE_SELECT
@@ -87,9 +75,6 @@
 
 /* Define to 1 if you have the <sys/types.h> header file. */
 #undef HAVE_SYS_TYPES_H
-
-/* define if the thrift library is available */
-#undef HAVE_THRIFT
 
 /* Define to 1 if you have the <unistd.h> header file. */
 #undef HAVE_UNISTD_H

@@ -9,9 +9,9 @@
 #define __MYSQL_BASE_H__
 
 #include <string>
-#include <QSqlDatabase>
-#include <QSqlQuery>
-#include <QSqlError>
+#include <QtSql/QSqlDatabase>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 #include "conf.h"
 
 using std::string;

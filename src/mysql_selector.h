@@ -9,7 +9,7 @@
 #define __MYSQL_SELECTOR_H__
 
 #include <string>
-#include <QThread>
+#include <QtCore/QThread>
 #include "mysql_base.h"
 
 using std::string;

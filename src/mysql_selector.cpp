@@ -7,10 +7,10 @@
 
 #include <unistd.h>
 #include <string>
-#include <QSqlQuery>
-#include <QVariant>
-#include <QSqlRecord>
-#include <QSqlError>
+#include <QtSql/QSqlQuery>
+#include <QtCore/QVariant>
+#include <QtSql/QSqlRecord>
+#include <QtSql/qsqldatabase.h>
 #include "logger_container.h"
 #include "url_context.h"
 #include "link_scheduler.h"

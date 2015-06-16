@@ -5,8 +5,8 @@
  * Description: 
  ************************************************************************/
 
-#include <QApplication>
-#include <QTextCodec>
+#include <QtWidgets/QApplication>
+#include <QtCore/QTextCodec>
 #include "logger_container.h"
 #include "request_recv.h"
 #include "http_processor.h"
@@ -20,7 +20,7 @@
 
 int main(int argc, char ** argv)
 {
-    QTextCodec::setCodecForCStrings(QTextCodec::codecForName("UTF-8"));
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
     // 用户webkit解析事件循环
     QApplication app(argc, argv);
 

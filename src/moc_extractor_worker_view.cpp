@@ -1,25 +1,48 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'extractor_worker_view.h'
 **
-** Created by: The Qt Meta Object Compiler version 63 (Qt 4.8.6)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.4.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
 #include "extractor_worker_view.h"
+#include <QtCore/qbytearray.h>
+#include <QtCore/qmetatype.h>
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'extractor_worker_view.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.6. It"
+#elif Q_MOC_OUTPUT_REVISION != 67
+#error "This file was generated using the moc from 5.4.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
+struct qt_meta_stringdata_ExtractorWorkerView_t {
+    QByteArrayData data[4];
+    char stringdata[37];
+};
+#define QT_MOC_LITERAL(idx, ofs, len) \
+    Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
+    qptrdiff(offsetof(qt_meta_stringdata_ExtractorWorkerView_t, stringdata) + ofs \
+        - idx * sizeof(QByteArrayData)) \
+    )
+static const qt_meta_stringdata_ExtractorWorkerView_t qt_meta_stringdata_ExtractorWorkerView = {
+    {
+QT_MOC_LITERAL(0, 0, 19), // "ExtractorWorkerView"
+QT_MOC_LITERAL(1, 20, 12), // "onLoadFinish"
+QT_MOC_LITERAL(2, 33, 0), // ""
+QT_MOC_LITERAL(3, 34, 2) // "ok"
+
+    },
+    "ExtractorWorkerView\0onLoadFinish\0\0ok"
+};
+#undef QT_MOC_LITERAL
+
 static const uint qt_meta_data_ExtractorWorkerView[] = {
 
  // content:
-       6,       // revision
+       7,       // revision
        0,       // classname
        0,    0, // classinfo
        1,   14, // methods
@@ -29,20 +52,18 @@ static const uint qt_meta_data_ExtractorWorkerView[] = {
        0,       // flags
        0,       // signalCount
 
- // slots: signature, parameters, type, tag, flags
-      24,   21,   20,   20, 0x09,
+ // slots: name, argc, parameters, tag, flags
+       1,    1,   19,    2, 0x09 /* Protected */,
+
+ // slots: parameters
+    QMetaType::Void, QMetaType::Bool,    3,
 
        0        // eod
-};
-
-static const char qt_meta_stringdata_ExtractorWorkerView[] = {
-    "ExtractorWorkerView\0\0ok\0onLoadFinish(bool)\0"
 };
 
 void ExtractorWorkerView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
         ExtractorWorkerView *_t = static_cast<ExtractorWorkerView *>(_o);
         switch (_id) {
         case 0: _t->onLoadFinish((*reinterpret_cast< bool(*)>(_a[1]))); break;
@@ -51,28 +72,21 @@ void ExtractorWorkerView::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     }
 }
 
-const QMetaObjectExtraData ExtractorWorkerView::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
-};
-
 const QMetaObject ExtractorWorkerView::staticMetaObject = {
-    { &QWebView::staticMetaObject, qt_meta_stringdata_ExtractorWorkerView,
-      qt_meta_data_ExtractorWorkerView, &staticMetaObjectExtraData }
+    { &QWebView::staticMetaObject, qt_meta_stringdata_ExtractorWorkerView.data,
+      qt_meta_data_ExtractorWorkerView,  qt_static_metacall, Q_NULLPTR, Q_NULLPTR}
 };
 
-#ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &ExtractorWorkerView::getStaticMetaObject() { return staticMetaObject; }
-#endif //Q_NO_DATA_RELOCATION
 
 const QMetaObject *ExtractorWorkerView::metaObject() const
 {
-    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
 void *ExtractorWorkerView::qt_metacast(const char *_clname)
 {
-    if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_ExtractorWorkerView))
+    if (!_clname) return Q_NULLPTR;
+    if (!strcmp(_clname, qt_meta_stringdata_ExtractorWorkerView.stringdata))
         return static_cast<void*>(const_cast< ExtractorWorkerView*>(this));
     return QWebView::qt_metacast(_clname);
 }
@@ -85,6 +99,10 @@ int ExtractorWorkerView::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         if (_id < 1)
             qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
+        if (_id < 1)
+            *reinterpret_cast<int*>(_a[0]) = -1;
         _id -= 1;
     }
     return _id;

@@ -48,7 +48,7 @@ void HttpEventEngine::run()
     base = event_base_new();
 
     _printStateEvent = evtimer_new(base, on_print_state, this);
-    struct timeval t = {.tv_sec = Conf::instance()->httpEventPrintStateInterval, .tv_usec = 0 };
+    struct timeval t = {Conf::instance()->httpEventPrintStateInterval, 0 };
     evtimer_add(_printStateEvent, &t);
 
     event_base_dispatch(base);
@@ -66,6 +66,6 @@ void HttpEventEngine::on_print_state(evutil_socket_t sock, short event, void *ar
     HttpEventEngine *httpEventEngine = (HttpEventEngine*)arg;
     LOG(DEBUG, "on_print_state");
     httpEventEngine->_httpProcessor->printState();
-    struct timeval t = {.tv_sec = Conf::instance()->httpEventPrintStateInterval, .tv_usec = 0 };
+    struct timeval t = {Conf::instance()->httpEventPrintStateInterval, 0 };
     evtimer_add(httpEventEngine->_printStateEvent, &t);
 }

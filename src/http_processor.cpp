@@ -104,7 +104,7 @@ int HttpProcessor::connect(UrlContext *urlContext)
     urlContext->event = event_new(_engine->base, urlContext->sock, EV_WRITE | EV_ET | EV_TIMEOUT, on_connected, (void*)urlContext);
 
     // 事件注册到IO事件模型
-    struct timeval t = {.tv_sec = Conf::instance()->httpConnectTimeout, .tv_usec = 0 };
+    struct timeval t = {Conf::instance()->httpConnectTimeout, 0 };
     event_add(urlContext->event, &t);
 
     // 非阻塞连接
@@ -173,7 +173,7 @@ void HttpProcessor::doWithSend(UrlContext *urlContext)
         event_del(urlContext->event);
         event_free(urlContext->event);
         urlContext->event = event_new(urlContext->base, urlContext->sock, EV_WRITE | EV_ET | EV_TIMEOUT, on_send, (void*)urlContext);
-        struct timeval t = {.tv_sec = Conf::instance()->httpSendTimeout, .tv_usec = 0 };
+        struct timeval t = {Conf::instance()->httpSendTimeout, 0 };
         event_add(urlContext->event, &t);
     } else if (E_FINISH == ret) {
         gettimeofday(&urlContext->beginRecvTime, NULL);
@@ -196,7 +196,7 @@ void HttpProcessor::doWithRecv(UrlContext *urlContext)
 {
     SndRcvRetType ret = urlContext->httpProcessor->tryRecv(urlContext);
     if (E_AGAIN == ret) {
-        struct timeval t = {.tv_sec = Conf::instance()->httpRecvTimeout, .tv_usec = 0 };
+        struct timeval t = {Conf::instance()->httpRecvTimeout, 0 };
         event_del(urlContext->event);
         event_free(urlContext->event);
         urlContext->event = event_new(urlContext->base, urlContext->sock, EV_READ | EV_ET | EV_TIMEOUT, on_recv, (void*)urlContext);

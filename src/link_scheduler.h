@@ -8,7 +8,7 @@
 #ifndef __LINK_SCHEDULER_H__
 #define __LINK_SCHEDULER_H__
 
-#include <QThread>
+#include <QtCore/QThread>
 #include <evhttp.h>
 #include <event2/thread.h>
 #include "link_table.h"

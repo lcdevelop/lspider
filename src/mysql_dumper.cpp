@@ -7,9 +7,9 @@
 
 #include <unistd.h>
 #include <time.h>
-#include <QSqlQuery>
-#include <QVariant>
-#include <QSqlError>
+#include <QtSql/QSqlQuery>
+#include <QtCore/QVariant>
+#include <QtSql/qsqldatabase.h>
 #include "logger_container.h"
 #include "util.h"
 #include "url_tools.h"

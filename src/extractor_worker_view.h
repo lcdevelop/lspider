@@ -9,7 +9,7 @@
 #define __EXTRACTOR_WORKER_VIEW_H__
 
 #include <string>
-#include <QWebView>
+#include <QtWebKitWidgets/QWebView>
 #include "DoubleList.h"
 
 using std::string;

@@ -6,8 +6,8 @@
  ************************************************************************/
 
 #include <unistd.h>
-#include <QSqlQuery>
-#include <QSqlError>
+#include <QtSql/QSqlQuery>
+#include <QtSql/QSqlError>
 #include "logger_container.h"
 #include "mysql_dumper.h"
 

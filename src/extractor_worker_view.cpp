@@ -6,7 +6,7 @@
  ************************************************************************/
 
 #include <QWebSettings>
-#include <QWebFrame>
+#include <QtWebKitWidgets/QWebFrame>
 #include <QWebElementCollection>
 #include <QWebElement>
 #include "logger_container.h"

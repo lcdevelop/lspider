@@ -13,10 +13,34 @@ AC_PROG_CC
 
 # Checks for libraries.
 AX_QT
-#AC_MSG_ERROR([$ac_qt_include_path], [$want_qt], [$ac_qt_lib_path])
-AC_MSG_RESULT([ac_qt_include_path=$ac_qt_include_path])
-AC_MSG_RESULT([ac_qt_lib_path=$ac_qt_lib_path])
-AC_MSG_ERROR([stop])
+if test "x$succeeded" != "xyes";then
+    AC_MSG_ERROR([checking qt fail])
+fi
+
+AX_MONGO_CLIENT
+if test "x$succeeded" != "xyes";then
+    AC_MSG_ERROR([checking mongo-client fail])
+fi
+
+AX_LIBEVENT
+if test "x$succeeded" != "xyes";then
+    AC_MSG_ERROR([checking libevent fail])
+fi
+
+AX_THRIFT
+if test "x$succeeded" != "xyes";then
+    AC_MSG_ERROR([checking thrift fail])
+fi
+
+AX_BOOST
+if test "x$succeeded" != "xyes";then
+    AC_MSG_ERROR([checking boost fail])
+fi
+
+AX_LOG4CPLUS
+if test "x$succeeded" != "xyes";then
+    AC_MSG_ERROR([checking log4cplus fail])
+fi
 
 #if test "x$succeeded" = "xno" ; then
 #    AC_MSG_ERROR(["Error: thrift required"])
