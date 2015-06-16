@@ -1,0 +1,41 @@
+# http://log4cplus.sourceforge.net/docs/html/classlog4cplus_1_1PropertyConfigurator.html
+# http://log4cplus.sourceforge.net/docs/html/classlog4cplus_1_1PatternLayout.html
+# %p event level
+# %D{%Y-%m-%d %H:%M:%S} 2015-05-16 21:33:43
+# %t thread name
+# %l test.cpp:12
+# %M __FUNCTION__
+# %m message
+# %n new line
+
+log4cplus.rootLogger=TRACE, normal_appender, wf_appender
+
+log4cplus.appender.normal_appender=log4cplus::RollingFileAppender
+log4cplus.appender.normal_appender.File=log/lcrawler.log
+log4cplus.appender.normal_appender.MaxFileSize=500MB
+log4cplus.appender.normal_appender.MaxBackupIndex=10
+log4cplus.appender.normal_appender.layout=log4cplus::PatternLayout
+log4cplus.appender.normal_appender.layout.ConversionPattern=%-5p: %D{%Y-%m-%d %H:%M:%S} %t %l %m%n
+#log4cplus.appender.normal_appender.filters.1=log4cplus::spi::LogLevelMatchFilter
+#log4cplus.appender.normal_appender.filters.1.LogLevelToMatch=TRACE
+log4cplus.appender.normal_appender.filters.1=log4cplus::spi::LogLevelRangeFilter
+log4cplus.appender.normal_appender.filters.1.LogLevelMin=TRACE
+#log4cplus.appender.normal_appender.filters.1.LogLevelMin=INFO
+log4cplus.appender.normal_appender.filters.1.LogLevelMax=INFO
+log4cplus.appender.normal_appender.filters.1.AcceptOnMatch=true
+log4cplus.appender.normal_appender.filters.2=log4cplus::spi::DenyAllFilter
+
+log4cplus.appender.wf_appender=log4cplus::RollingFileAppender
+log4cplus.appender.wf_appender.File=log/lcrawler.log.wf
+log4cplus.appender.wf_appender.MaxFileSize=500MB
+log4cplus.appender.wf_appender.MaxBackupIndex=10
+log4cplus.appender.wf_appender.layout=log4cplus::PatternLayout
+#log4cplus.appender.wf_appender.layout.ConversionPattern=%-5p: %D{%Y-%m-%d %H:%M:%S} %t %l [%M] %m%n
+log4cplus.appender.wf_appender.layout.ConversionPattern=%-5p: %D{%Y-%m-%d %H:%M:%S} %t %l %m%n
+#log4cplus.appender.wf_appender.filters.1=log4cplus::spi::LogLevelMatchFilter
+#log4cplus.appender.wf_appender.filters.1.LogLevelToMatch=TRACE
+log4cplus.appender.wf_appender.filters.1=log4cplus::spi::LogLevelRangeFilter
+log4cplus.appender.wf_appender.filters.1.LogLevelMin=WARN
+log4cplus.appender.wf_appender.filters.1.LogLevelMax=FATAL
+log4cplus.appender.wf_appender.filters.1.AcceptOnMatch=true
+log4cplus.appender.wf_appender.filters.2=log4cplus::spi::DenyAllFilter

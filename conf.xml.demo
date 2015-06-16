@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<lcrawler>
+
+    <mysql>
+        <host>localhost</host>
+        <port>3306</port>
+        <user>root</user>
+        <password></password>
+        <database>lspider</database>
+        <tableName>link</tableName>
+
+        <selector>
+            <switch>on</switch>
+            <selectInterval>10</selectInterval>
+            <maxLinkDepth>1</maxLinkDepth>
+            <maindomainListFile>maindomain.list</maindomainListFile>
+            <maxCrawlRetry>5</maxCrawlRetry>
+        </selector>
+        <dumper>
+            <insertBatch>20</insertBatch>
+            <updateBatch>20</updateBatch>
+        </dumper>
+    </mysql>
+
+    <http>
+        <eventPrintStateInterval>5</eventPrintStateInterval>
+        <connectTimeout>20</connectTimeout>
+        <sendTimeout>1</sendTimeout>
+        <recvTimeout>5</recvTimeout>
+        <maxRetry>2</maxRetry>
+        <maxConcurrence>512</maxConcurrence>
+        <maxRedirectDepth>5</maxRedirectDepth>
+        <maxPageSize>524288</maxPageSize>
+        <connectQueueSize>1000</connectQueueSize>
+    </http>
+
+    <scheduler>
+        <printStateInterval>5</printStateInterval>
+        <maxUrlTableSize>20</maxUrlTableSize>
+    </scheduler>
+
+    <mongo>
+        <hostAndPort>localhost</hostAndPort>
+    </mongo>
+
+    <extractor>
+        <maxQueueSize>300</maxQueueSize>
+        <timeout>10000</timeout>>
+    </extractor>
+
+</lcrawler>
