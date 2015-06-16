@@ -1005,4 +1005,3 @@ m4_include([aclocal/ax_libevent.m4])
 m4_include([aclocal/ax_thrift.m4])
 m4_include([aclocal/ax_boost.m4])
 m4_include([aclocal/ax_log4cplus.m4])
-

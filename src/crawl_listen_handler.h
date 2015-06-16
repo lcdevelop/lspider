@@ -8,13 +8,13 @@
 #ifndef __CRAWL_LISTEN_HANDLER_H__
 #define __CRAWL_LISTEN_HANDLER_H__
 
-#include "CrawlService.h"
 #include <thrift/protocol/TBinaryProtocol.h>
 #include <thrift/server/TSimpleServer.h>
 #include <thrift/server/TThreadPoolServer.h>
 #include <thrift/concurrency/PosixThreadFactory.h>
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
+#include "CrawlService.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
