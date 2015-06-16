@@ -2463,7 +2463,6 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-#AC_CONFIG_HEADERS([src/conf.h])
 am__api_version='1.13'
 
 ac_aux_dir=

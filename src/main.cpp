@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
     // 日志初始化
     LoggerContainer::init();
 
-    if (false == Conf::instance()->load("conf.xml")) {
+    if (false == Conf::instance()->load("./conf/conf.xml")) {
         return -1;
     }
 

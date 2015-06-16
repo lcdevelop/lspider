@@ -24,7 +24,7 @@ class LoggerContainer
 public:
     static void init() {
         logger = log4cplus::Logger::getRoot();
-        log4cplus::PropertyConfigurator::doConfigure("log.properties");
+        log4cplus::PropertyConfigurator::doConfigure("./conf/log.properties");
     }
     static log4cplus::Logger logger;
 };
