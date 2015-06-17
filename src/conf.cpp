@@ -42,6 +42,7 @@ bool Conf::load(const char *confFile)
         httpMaxPageSize = pt.get<int>("lcrawler.http.maxPageSize");
         httpConnectQueueSize = pt.get<int>("lcrawler.http.connectQueueSize");
         schedulerPrintStateInterval = pt.get<int>("lcrawler.scheduler.printStateInterval");
+        schedulerIpScheduleInterval = pt.get<int>("lcrawler.scheduler.ipScheduleInterval");
         schedulerMaxUrlTableSize = pt.get<size_t>("lcrawler.scheduler.maxUrlTableSize");
         mongoHostAndPort = pt.get<string>("lcrawler.mongo.hostAndPort");
         extractorMaxQueueSize = pt.get<int>("lcrawler.extractor.maxQueueSize");

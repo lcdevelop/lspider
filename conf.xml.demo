@@ -13,7 +13,7 @@
             <switch>on</switch>
             <selectInterval>10</selectInterval>
             <maxLinkDepth>1</maxLinkDepth>
-            <maindomainListFile>maindomain.list</maindomainListFile>
+            <maindomainListFile>./data/maindomain.list</maindomainListFile>
             <maxCrawlRetry>5</maxCrawlRetry>
         </selector>
         <dumper>
@@ -37,6 +37,7 @@
     <scheduler>
         <printStateInterval>5</printStateInterval>
         <maxUrlTableSize>20</maxUrlTableSize>
+        <ipScheduleInterval>5</ipScheduleInterval>
     </scheduler>
 
     <mongo>

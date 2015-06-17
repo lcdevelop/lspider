@@ -87,6 +87,7 @@ IpContext* LinkTable::getIpContext(IpTable *ipTable, Ip ip, bool allocAtFail)
         if (allocAtFail) {
             IpContext *ipContext = new IpContext;
             ipContext->ip = ip;
+            ipContext->scheduleInterval = Conf::instance()->schedulerIpScheduleInterval;
             ipContext->linkTable = this;
             ipTable->insert(pair<Ip, IpContext*>(ip, ipContext));
             _linkScheduler->addIpSchedule(ipContext);

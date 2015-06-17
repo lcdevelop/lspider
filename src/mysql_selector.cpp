@@ -99,7 +99,9 @@ bool MySqlSelector::select()
     // 动态加载
     Conf::instance()->loadMaindomainList(Conf::instance()->maindomainListFile);
     vector<string> & maindomainList = Conf::instance()->maindomainList;
-    assert(maindomainList.size() > 0);
+    if (maindomainList.size() == 0) {
+        LOG(FATAL, "maindomainList.size == 0");
+    }
     string inPhraseList = string("'") + maindomainList[0] + string("'");
     for (size_t i = 1; i < maindomainList.size(); i++) {
         inPhraseList += ",'" + maindomainList[i] + string("'");

@@ -44,6 +44,7 @@ public:
     int httpMaxPageSize;
     int httpConnectQueueSize;
     int schedulerPrintStateInterval;
+    int schedulerIpScheduleInterval;
     size_t schedulerMaxUrlTableSize;
     string mongoHostAndPort;
     int extractorMaxQueueSize;

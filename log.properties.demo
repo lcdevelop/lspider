@@ -11,7 +11,7 @@
 log4cplus.rootLogger=TRACE, normal_appender, wf_appender
 
 log4cplus.appender.normal_appender=log4cplus::RollingFileAppender
-log4cplus.appender.normal_appender.File=log/lcrawler.log
+log4cplus.appender.normal_appender.File=log/lspider.log
 log4cplus.appender.normal_appender.MaxFileSize=500MB
 log4cplus.appender.normal_appender.MaxBackupIndex=10
 log4cplus.appender.normal_appender.layout=log4cplus::PatternLayout
@@ -26,7 +26,7 @@ log4cplus.appender.normal_appender.filters.1.AcceptOnMatch=true
 log4cplus.appender.normal_appender.filters.2=log4cplus::spi::DenyAllFilter
 
 log4cplus.appender.wf_appender=log4cplus::RollingFileAppender
-log4cplus.appender.wf_appender.File=log/lcrawler.log.wf
+log4cplus.appender.wf_appender.File=log/lspider.log.wf
 log4cplus.appender.wf_appender.MaxFileSize=500MB
 log4cplus.appender.wf_appender.MaxBackupIndex=10
 log4cplus.appender.wf_appender.layout=log4cplus::PatternLayout
