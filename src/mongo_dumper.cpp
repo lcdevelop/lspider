@@ -59,20 +59,27 @@ bool MongoDumper::dump(UrlContext *urlContext)
     mongo::BSONObjBuilder data;
     makeData(urlContext, data);
 
-    _conn.update(_db,
-                 query.obj(),
-                 data.obj(),
-                 true);
-    if ("" == _conn.getLastError(_db)) {
-        LOG_F(INFO, "%d [%s] dump mongo success [sign=%s]",
-              urlContext->uuid,
-              urlContext->url.c_str(),
-              urlContext->sign);
-        return true;
+    if (data.obj().objsize() <= _conn.getMaxBsonObjectSize()) {
+        _conn.update(_db,
+                     query.obj(),
+                     data.obj(),
+                     true);
+        if ("" == _conn.getLastError(_db)) {
+            LOG_F(INFO, "%d [%s] dump mongo success [sign=%s]",
+                  urlContext->uuid,
+                  urlContext->url.c_str(),
+                  urlContext->sign);
+            return true;
+        } else {
+            LOG_F(WARN, "%d [%s] dump mongo fail",
+                  urlContext->uuid,
+                  urlContext->url.c_str());
+            return false;
+        }
     } else {
-        LOG_F(WARN, "%d [%s] dump mongo fail",
+        LOG_F(WARN, "%d [%s] objsize(%d) > MaxBsonObjectSize ",
               urlContext->uuid,
-              urlContext->url.c_str());
+              urlContext->url.c_str(), data.obj().objsize());
         return false;
     }
 }

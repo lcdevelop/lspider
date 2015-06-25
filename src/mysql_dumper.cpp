@@ -127,7 +127,7 @@ bool MySqlDumper::dumpOneLink(const string href, const string anchor, UrlContext
     _insertLinksCmd += QString(href.c_str()) + "\',\'";
     _insertLinksCmd += QString(maindomain) + "\',\'";
     _insertLinksCmd += QString(urlContext->url.c_str()) + "\',\'";
-    _insertLinksCmd += QString(anchor.c_str()) + "\',";
+    _insertLinksCmd += QString(anchor.c_str()).replace('\'', "\\'") + "\',";
     _insertLinksCmd += QString::number(urlContext->linkDepth + 1) + ",";
     _insertLinksCmd += QString::number(MySqlBase::NEW) + ",";
     _insertLinksCmd += QString("current_timestamp()") + "),";
