@@ -16,4 +16,4 @@ test_qtextcodec.o : test_qtextcodec.cpp
 	g++ -c -o test_qtextcodec.o test_qtextcodec.cpp -I /usr/include/qt5/ -fPIC
 
 clean :
-	rm -f *.o test_util
+	rm -f *.o test_util test_qtextcodec
