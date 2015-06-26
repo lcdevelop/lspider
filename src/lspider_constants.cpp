@@ -4,13 +4,13 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "lcrawler_constants.h"
+#include "lspider_constants.h"
 
-namespace lcrawler {
+namespace lspider {
 
-const lcrawlerConstants g_lcrawler_constants;
+const lspiderConstants g_lspider_constants;
 
-lcrawlerConstants::lcrawlerConstants() {
+lspiderConstants::lspiderConstants() {
 }
 
 } // namespace

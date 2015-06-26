@@ -1,4 +1,4 @@
-namespace cpp lcrawler
+namespace cpp lspider
 
 struct IUrl {
     1: string str,

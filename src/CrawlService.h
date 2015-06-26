@@ -8,9 +8,9 @@
 #define CrawlService_H
 
 #include <thrift/TDispatchProcessor.h>
-#include "lcrawler_types.h"
+#include "lspider_types.h"
 
-namespace lcrawler {
+namespace lspider {
 
 class CrawlServiceIf {
  public:

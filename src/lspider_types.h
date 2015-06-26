@@ -4,8 +4,8 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#ifndef lcrawler_TYPES_H
-#define lcrawler_TYPES_H
+#ifndef lspider_TYPES_H
+#define lspider_TYPES_H
 
 #include <thrift/Thrift.h>
 #include <thrift/TApplicationException.h>
@@ -14,7 +14,7 @@
 
 
 
-namespace lcrawler {
+namespace lspider {
 
 typedef struct _IUrl__isset {
   _IUrl__isset() : str(false), ip(false), hub(true) {}

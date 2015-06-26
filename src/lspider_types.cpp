@@ -4,11 +4,11 @@
  * DO NOT EDIT UNLESS YOU ARE SURE THAT YOU KNOW WHAT YOU ARE DOING
  *  @generated
  */
-#include "lcrawler_types.h"
+#include "lspider_types.h"
 
 #include <algorithm>
 
-namespace lcrawler {
+namespace lspider {
 
 const char* IUrl::ascii_fingerprint = "7F21FB535884165D6350077C7B970E93";
 const uint8_t IUrl::binary_fingerprint[16] = {0x7F,0x21,0xFB,0x53,0x58,0x84,0x16,0x5D,0x63,0x50,0x07,0x7C,0x7B,0x97,0x0E,0x93};

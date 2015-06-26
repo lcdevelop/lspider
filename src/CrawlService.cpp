@@ -6,7 +6,7 @@
  */
 #include "CrawlService.h"
 
-namespace lcrawler {
+namespace lspider {
 
 uint32_t CrawlService_request_args::read(::apache::thrift::protocol::TProtocol* iprot) {
 

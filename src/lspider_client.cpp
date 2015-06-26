@@ -26,7 +26,7 @@ using namespace ::apache::thrift::server;
 
 using boost::shared_ptr;
 
-using namespace lcrawler;
+using namespace lspider;
 
 int main(int argc, char *argv[])
 {

@@ -24,7 +24,7 @@ using namespace ::apache::thrift::concurrency;
 
 using boost::shared_ptr;
 
-using namespace  ::lcrawler;
+using namespace  ::lspider;
 
 class HttpProcessor;
 

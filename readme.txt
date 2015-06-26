@@ -1,4 +1,4 @@
-~/thrift/bin/thrift -r -out src/ --gen cpp lcrawler.thrift
+~/thrift/bin/thrift -r -out src/ --gen cpp lspider.thrift
 
 moc-qt5 src/extractor_worker_view.h -o src/moc_extractor_worker_view.cpp
 moc-qt5 src/extractor_worker_view.h -o src/moc_extractor_worker_view.cpp^C

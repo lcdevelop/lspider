@@ -75,13 +75,13 @@ am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
 am_lspider_OBJECTS = lspider-main.$(OBJEXT) lspider-conf.$(OBJEXT) \
 	lspider-extractor_worker_view.$(OBJEXT) \
-	lspider-lcrawler_constants.$(OBJEXT) \
+	lspider-lspider_constants.$(OBJEXT) \
 	lspider-logger_container.$(OBJEXT) \
 	lspider-moc_link_scheduler.$(OBJEXT) \
 	lspider-mysql_base.$(OBJEXT) lspider-url_context.$(OBJEXT) \
 	lspider-crawl_listen_handler.$(OBJEXT) \
 	lspider-http_event_engine.$(OBJEXT) \
-	lspider-lcrawler_types.$(OBJEXT) lspider-lthread.$(OBJEXT) \
+	lspider-lspider_types.$(OBJEXT) lspider-lthread.$(OBJEXT) \
 	lspider-moc_mysql_dumper.$(OBJEXT) \
 	lspider-mysql_dumper.$(OBJEXT) lspider-url_tools.$(OBJEXT) \
 	lspider-CrawlService.$(OBJEXT) \
@@ -96,9 +96,9 @@ am_lspider_OBJECTS = lspider-main.$(OBJEXT) lspider-conf.$(OBJEXT) \
 lspider_OBJECTS = $(am_lspider_OBJECTS)
 lspider_LDADD = $(LDADD)
 am_lspider_client_OBJECTS = lspider_client-lspider_client.$(OBJEXT) \
-	lspider_client-lcrawler_constants.$(OBJEXT) \
+	lspider_client-lspider_constants.$(OBJEXT) \
 	lspider_client-CrawlService.$(OBJEXT) \
-	lspider_client-lcrawler_types.$(OBJEXT) \
+	lspider_client-lspider_types.$(OBJEXT) \
 	lspider_client-url_context.$(OBJEXT) \
 	lspider_client-logger_container.$(OBJEXT) \
 	lspider_client-url_tools.$(OBJEXT) \
@@ -304,8 +304,8 @@ top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
 AUTOMAKE_OPTIONS = foreign
-lspider_SOURCES = src/main.cpp src/conf.cpp src/extractor_worker_view.cpp src/lcrawler_constants.cpp src/logger_container.cpp src/moc_link_scheduler.cpp src/mysql_base.cpp src/url_context.cpp \
-				src/crawl_listen_handler.cpp src/http_event_engine.cpp src/lcrawler_types.cpp src/lthread.cpp src/moc_mysql_dumper.cpp src/mysql_dumper.cpp src/url_tools.cpp \
+lspider_SOURCES = src/main.cpp src/conf.cpp src/extractor_worker_view.cpp src/lspider_constants.cpp src/logger_container.cpp src/moc_link_scheduler.cpp src/mysql_base.cpp src/url_context.cpp \
+				src/crawl_listen_handler.cpp src/http_event_engine.cpp src/lspider_types.cpp src/lthread.cpp src/moc_mysql_dumper.cpp src/mysql_dumper.cpp src/url_tools.cpp \
 				src/CrawlService.cpp src/http_processor.cpp src/link_scheduler.cpp src/moc_mysql_selector.cpp src/mysql_selector.cpp src/util.cpp \
 				src/extractor.cpp src/http_protocol.cpp src/link_table.cpp src/moc_extractor_worker_view.cpp src/mongo_dumper.cpp src/request_recv.cpp
 
@@ -313,7 +313,7 @@ lspider_CPPFLAGS = $(QT_CPPFLAGS) $(MONGO_CLIENT_CPPFLAGS) \
 				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
 				 $(QT_CPPFLAGS)/QtWebKit $(THRIFT_CPPFLAGS) -fPIC
 
-lspider_client_SOURCES = src/lspider_client.cpp src/lcrawler_constants.cpp src/CrawlService.cpp src/lcrawler_types.cpp src/url_context.cpp src/logger_container.cpp src/url_tools.cpp src/util.cpp
+lspider_client_SOURCES = src/lspider_client.cpp src/lspider_constants.cpp src/CrawlService.cpp src/lspider_types.cpp src/url_context.cpp src/logger_container.cpp src/url_tools.cpp src/util.cpp
 lspider_client_CPPFLAGS = $(QT_CPPFLAGS) $(MONGO_CLIENT_CPPFLAGS) \
 				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
 				 $(QT_CPPFLAGS)/QtWebKit $(THRIFT_CPPFLAGS) -fPIC
@@ -423,11 +423,11 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-http_event_engine.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-http_processor.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-http_protocol.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-lcrawler_constants.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-lcrawler_types.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-link_scheduler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-link_table.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-logger_container.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-lspider_constants.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-lspider_types.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-lthread.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-main.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-moc_extractor_worker_view.Po@am__quote@
@@ -443,10 +443,10 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-url_tools.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-util.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-CrawlService.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-lcrawler_constants.Po@am__quote@
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-lcrawler_types.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-logger_container.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-lspider_client.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-lspider_constants.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-lspider_types.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-url_context.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-url_tools.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider_client-util.Po@am__quote@
@@ -509,19 +509,19 @@ lspider-extractor_worker_view.obj: src/extractor_worker_view.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-extractor_worker_view.obj `if test -f 'src/extractor_worker_view.cpp'; then $(CYGPATH_W) 'src/extractor_worker_view.cpp'; else $(CYGPATH_W) '$(srcdir)/src/extractor_worker_view.cpp'; fi`
 
-lspider-lcrawler_constants.o: src/lcrawler_constants.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lcrawler_constants.o -MD -MP -MF $(DEPDIR)/lspider-lcrawler_constants.Tpo -c -o lspider-lcrawler_constants.o `test -f 'src/lcrawler_constants.cpp' || echo '$(srcdir)/'`src/lcrawler_constants.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lcrawler_constants.Tpo $(DEPDIR)/lspider-lcrawler_constants.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_constants.cpp' object='lspider-lcrawler_constants.o' libtool=no @AMDEPBACKSLASH@
+lspider-lspider_constants.o: src/lspider_constants.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lspider_constants.o -MD -MP -MF $(DEPDIR)/lspider-lspider_constants.Tpo -c -o lspider-lspider_constants.o `test -f 'src/lspider_constants.cpp' || echo '$(srcdir)/'`src/lspider_constants.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lspider_constants.Tpo $(DEPDIR)/lspider-lspider_constants.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_constants.cpp' object='lspider-lspider_constants.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lcrawler_constants.o `test -f 'src/lcrawler_constants.cpp' || echo '$(srcdir)/'`src/lcrawler_constants.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lspider_constants.o `test -f 'src/lspider_constants.cpp' || echo '$(srcdir)/'`src/lspider_constants.cpp
 
-lspider-lcrawler_constants.obj: src/lcrawler_constants.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lcrawler_constants.obj -MD -MP -MF $(DEPDIR)/lspider-lcrawler_constants.Tpo -c -o lspider-lcrawler_constants.obj `if test -f 'src/lcrawler_constants.cpp'; then $(CYGPATH_W) 'src/lcrawler_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_constants.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lcrawler_constants.Tpo $(DEPDIR)/lspider-lcrawler_constants.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_constants.cpp' object='lspider-lcrawler_constants.obj' libtool=no @AMDEPBACKSLASH@
+lspider-lspider_constants.obj: src/lspider_constants.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lspider_constants.obj -MD -MP -MF $(DEPDIR)/lspider-lspider_constants.Tpo -c -o lspider-lspider_constants.obj `if test -f 'src/lspider_constants.cpp'; then $(CYGPATH_W) 'src/lspider_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_constants.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lspider_constants.Tpo $(DEPDIR)/lspider-lspider_constants.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_constants.cpp' object='lspider-lspider_constants.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lcrawler_constants.obj `if test -f 'src/lcrawler_constants.cpp'; then $(CYGPATH_W) 'src/lcrawler_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_constants.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lspider_constants.obj `if test -f 'src/lspider_constants.cpp'; then $(CYGPATH_W) 'src/lspider_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_constants.cpp'; fi`
 
 lspider-logger_container.o: src/logger_container.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-logger_container.o -MD -MP -MF $(DEPDIR)/lspider-logger_container.Tpo -c -o lspider-logger_container.o `test -f 'src/logger_container.cpp' || echo '$(srcdir)/'`src/logger_container.cpp
@@ -607,19 +607,19 @@ lspider-http_event_engine.obj: src/http_event_engine.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-http_event_engine.obj `if test -f 'src/http_event_engine.cpp'; then $(CYGPATH_W) 'src/http_event_engine.cpp'; else $(CYGPATH_W) '$(srcdir)/src/http_event_engine.cpp'; fi`
 
-lspider-lcrawler_types.o: src/lcrawler_types.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lcrawler_types.o -MD -MP -MF $(DEPDIR)/lspider-lcrawler_types.Tpo -c -o lspider-lcrawler_types.o `test -f 'src/lcrawler_types.cpp' || echo '$(srcdir)/'`src/lcrawler_types.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lcrawler_types.Tpo $(DEPDIR)/lspider-lcrawler_types.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_types.cpp' object='lspider-lcrawler_types.o' libtool=no @AMDEPBACKSLASH@
+lspider-lspider_types.o: src/lspider_types.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lspider_types.o -MD -MP -MF $(DEPDIR)/lspider-lspider_types.Tpo -c -o lspider-lspider_types.o `test -f 'src/lspider_types.cpp' || echo '$(srcdir)/'`src/lspider_types.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lspider_types.Tpo $(DEPDIR)/lspider-lspider_types.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_types.cpp' object='lspider-lspider_types.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lcrawler_types.o `test -f 'src/lcrawler_types.cpp' || echo '$(srcdir)/'`src/lcrawler_types.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lspider_types.o `test -f 'src/lspider_types.cpp' || echo '$(srcdir)/'`src/lspider_types.cpp
 
-lspider-lcrawler_types.obj: src/lcrawler_types.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lcrawler_types.obj -MD -MP -MF $(DEPDIR)/lspider-lcrawler_types.Tpo -c -o lspider-lcrawler_types.obj `if test -f 'src/lcrawler_types.cpp'; then $(CYGPATH_W) 'src/lcrawler_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_types.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lcrawler_types.Tpo $(DEPDIR)/lspider-lcrawler_types.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_types.cpp' object='lspider-lcrawler_types.obj' libtool=no @AMDEPBACKSLASH@
+lspider-lspider_types.obj: src/lspider_types.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lspider_types.obj -MD -MP -MF $(DEPDIR)/lspider-lspider_types.Tpo -c -o lspider-lspider_types.obj `if test -f 'src/lspider_types.cpp'; then $(CYGPATH_W) 'src/lspider_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_types.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-lspider_types.Tpo $(DEPDIR)/lspider-lspider_types.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_types.cpp' object='lspider-lspider_types.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lcrawler_types.obj `if test -f 'src/lcrawler_types.cpp'; then $(CYGPATH_W) 'src/lcrawler_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_types.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-lspider_types.obj `if test -f 'src/lspider_types.cpp'; then $(CYGPATH_W) 'src/lspider_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_types.cpp'; fi`
 
 lspider-lthread.o: src/lthread.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-lthread.o -MD -MP -MF $(DEPDIR)/lspider-lthread.Tpo -c -o lspider-lthread.o `test -f 'src/lthread.cpp' || echo '$(srcdir)/'`src/lthread.cpp
@@ -859,19 +859,19 @@ lspider_client-lspider_client.obj: src/lspider_client.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lspider_client.obj `if test -f 'src/lspider_client.cpp'; then $(CYGPATH_W) 'src/lspider_client.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_client.cpp'; fi`
 
-lspider_client-lcrawler_constants.o: src/lcrawler_constants.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lcrawler_constants.o -MD -MP -MF $(DEPDIR)/lspider_client-lcrawler_constants.Tpo -c -o lspider_client-lcrawler_constants.o `test -f 'src/lcrawler_constants.cpp' || echo '$(srcdir)/'`src/lcrawler_constants.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lcrawler_constants.Tpo $(DEPDIR)/lspider_client-lcrawler_constants.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_constants.cpp' object='lspider_client-lcrawler_constants.o' libtool=no @AMDEPBACKSLASH@
+lspider_client-lspider_constants.o: src/lspider_constants.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lspider_constants.o -MD -MP -MF $(DEPDIR)/lspider_client-lspider_constants.Tpo -c -o lspider_client-lspider_constants.o `test -f 'src/lspider_constants.cpp' || echo '$(srcdir)/'`src/lspider_constants.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lspider_constants.Tpo $(DEPDIR)/lspider_client-lspider_constants.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_constants.cpp' object='lspider_client-lspider_constants.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lcrawler_constants.o `test -f 'src/lcrawler_constants.cpp' || echo '$(srcdir)/'`src/lcrawler_constants.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lspider_constants.o `test -f 'src/lspider_constants.cpp' || echo '$(srcdir)/'`src/lspider_constants.cpp
 
-lspider_client-lcrawler_constants.obj: src/lcrawler_constants.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lcrawler_constants.obj -MD -MP -MF $(DEPDIR)/lspider_client-lcrawler_constants.Tpo -c -o lspider_client-lcrawler_constants.obj `if test -f 'src/lcrawler_constants.cpp'; then $(CYGPATH_W) 'src/lcrawler_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_constants.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lcrawler_constants.Tpo $(DEPDIR)/lspider_client-lcrawler_constants.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_constants.cpp' object='lspider_client-lcrawler_constants.obj' libtool=no @AMDEPBACKSLASH@
+lspider_client-lspider_constants.obj: src/lspider_constants.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lspider_constants.obj -MD -MP -MF $(DEPDIR)/lspider_client-lspider_constants.Tpo -c -o lspider_client-lspider_constants.obj `if test -f 'src/lspider_constants.cpp'; then $(CYGPATH_W) 'src/lspider_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_constants.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lspider_constants.Tpo $(DEPDIR)/lspider_client-lspider_constants.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_constants.cpp' object='lspider_client-lspider_constants.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lcrawler_constants.obj `if test -f 'src/lcrawler_constants.cpp'; then $(CYGPATH_W) 'src/lcrawler_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_constants.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lspider_constants.obj `if test -f 'src/lspider_constants.cpp'; then $(CYGPATH_W) 'src/lspider_constants.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_constants.cpp'; fi`
 
 lspider_client-CrawlService.o: src/CrawlService.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-CrawlService.o -MD -MP -MF $(DEPDIR)/lspider_client-CrawlService.Tpo -c -o lspider_client-CrawlService.o `test -f 'src/CrawlService.cpp' || echo '$(srcdir)/'`src/CrawlService.cpp
@@ -887,19 +887,19 @@ lspider_client-CrawlService.obj: src/CrawlService.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-CrawlService.obj `if test -f 'src/CrawlService.cpp'; then $(CYGPATH_W) 'src/CrawlService.cpp'; else $(CYGPATH_W) '$(srcdir)/src/CrawlService.cpp'; fi`
 
-lspider_client-lcrawler_types.o: src/lcrawler_types.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lcrawler_types.o -MD -MP -MF $(DEPDIR)/lspider_client-lcrawler_types.Tpo -c -o lspider_client-lcrawler_types.o `test -f 'src/lcrawler_types.cpp' || echo '$(srcdir)/'`src/lcrawler_types.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lcrawler_types.Tpo $(DEPDIR)/lspider_client-lcrawler_types.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_types.cpp' object='lspider_client-lcrawler_types.o' libtool=no @AMDEPBACKSLASH@
+lspider_client-lspider_types.o: src/lspider_types.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lspider_types.o -MD -MP -MF $(DEPDIR)/lspider_client-lspider_types.Tpo -c -o lspider_client-lspider_types.o `test -f 'src/lspider_types.cpp' || echo '$(srcdir)/'`src/lspider_types.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lspider_types.Tpo $(DEPDIR)/lspider_client-lspider_types.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_types.cpp' object='lspider_client-lspider_types.o' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lcrawler_types.o `test -f 'src/lcrawler_types.cpp' || echo '$(srcdir)/'`src/lcrawler_types.cpp
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lspider_types.o `test -f 'src/lspider_types.cpp' || echo '$(srcdir)/'`src/lspider_types.cpp
 
-lspider_client-lcrawler_types.obj: src/lcrawler_types.cpp
-@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lcrawler_types.obj -MD -MP -MF $(DEPDIR)/lspider_client-lcrawler_types.Tpo -c -o lspider_client-lcrawler_types.obj `if test -f 'src/lcrawler_types.cpp'; then $(CYGPATH_W) 'src/lcrawler_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_types.cpp'; fi`
-@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lcrawler_types.Tpo $(DEPDIR)/lspider_client-lcrawler_types.Po
-@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lcrawler_types.cpp' object='lspider_client-lcrawler_types.obj' libtool=no @AMDEPBACKSLASH@
+lspider_client-lspider_types.obj: src/lspider_types.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lspider_types.obj -MD -MP -MF $(DEPDIR)/lspider_client-lspider_types.Tpo -c -o lspider_client-lspider_types.obj `if test -f 'src/lspider_types.cpp'; then $(CYGPATH_W) 'src/lspider_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_types.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider_client-lspider_types.Tpo $(DEPDIR)/lspider_client-lspider_types.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/lspider_types.cpp' object='lspider_client-lspider_types.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lcrawler_types.obj `if test -f 'src/lcrawler_types.cpp'; then $(CYGPATH_W) 'src/lcrawler_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lcrawler_types.cpp'; fi`
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider_client-lspider_types.obj `if test -f 'src/lspider_types.cpp'; then $(CYGPATH_W) 'src/lspider_types.cpp'; else $(CYGPATH_W) '$(srcdir)/src/lspider_types.cpp'; fi`
 
 lspider_client-url_context.o: src/url_context.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-url_context.o -MD -MP -MF $(DEPDIR)/lspider_client-url_context.Tpo -c -o lspider_client-url_context.o `test -f 'src/url_context.cpp' || echo '$(srcdir)/'`src/url_context.cpp
