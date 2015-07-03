@@ -33,3 +33,10 @@ void CrawlListenHandler::request(const IUrl& u)
 
     _httpProcessor->pushConnectQueue(urlContext);
 }
+
+void CrawlListenHandler::exec_cmd(string& response, const string& cmd)
+{
+    LOG_F(DEBUG, "cmd=%s", cmd.c_str());
+    assert(NULL != _cmdCtrler);
+    _cmdCtrler->control(response, cmd);
+}

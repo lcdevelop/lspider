@@ -15,6 +15,7 @@
 #include <thrift/transport/TServerSocket.h>
 #include <thrift/transport/TBufferTransports.h>
 #include "CrawlService.h"
+#include "cmd_ctrler.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -40,9 +41,11 @@ public:
      * RPC接口
      */
     void request(const IUrl& u);
+    void exec_cmd(string& response, const string& cmd);
 
 private:
     HttpProcessor *_httpProcessor; // 传递指针
+    CmdCtrler *_cmdCtrler;
 };
 
 #endif

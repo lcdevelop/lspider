@@ -92,7 +92,8 @@ am_lspider_OBJECTS = lspider-main.$(OBJEXT) lspider-conf.$(OBJEXT) \
 	lspider-extractor.$(OBJEXT) lspider-http_protocol.$(OBJEXT) \
 	lspider-link_table.$(OBJEXT) \
 	lspider-moc_extractor_worker_view.$(OBJEXT) \
-	lspider-mongo_dumper.$(OBJEXT) lspider-request_recv.$(OBJEXT)
+	lspider-mongo_dumper.$(OBJEXT) lspider-request_recv.$(OBJEXT) \
+	lspider-cmd_ctrler.$(OBJEXT)
 lspider_OBJECTS = $(am_lspider_OBJECTS)
 lspider_LDADD = $(LDADD)
 am_lspider_client_OBJECTS = lspider_client-lspider_client.$(OBJEXT) \
@@ -226,7 +227,7 @@ LIBOBJS = @LIBOBJS@
 LIBS = $(QT_LDFLAGS)/ -lQt5Core -lQt5Widgets -lQt5WebKit -lQt5WebKitWidgets -lQt5Network -lQt5Sql \
 				$(MONGO_CLIENT_LDFLAGS) -lmongoclient $(LIBEVENT_LDFLAGS) -levent -levent_core -levent_extra -levent_pthreads \
 				$(BOOST_LDFLAGS) -lboost_system -lboost_thread-mt -lboost_filesystem -lboost_program_options -lboost_regex $(LOG4CPLUS_LDFLAGS) -llog4cplus \
-				$(THRIFT_LDFLAGS) -lthrift -lz -lpthread
+				$(THRIFT_LDFLAGS) -lthrift -lz -lpthread -lreadline
 
 LOG4CPLUS_CPPFLAGS = @LOG4CPLUS_CPPFLAGS@
 LOG4CPLUS_LDFLAGS = @LOG4CPLUS_LDFLAGS@
@@ -307,7 +308,8 @@ AUTOMAKE_OPTIONS = foreign
 lspider_SOURCES = src/main.cpp src/conf.cpp src/extractor_worker_view.cpp src/lspider_constants.cpp src/logger_container.cpp src/moc_link_scheduler.cpp src/mysql_base.cpp src/url_context.cpp \
 				src/crawl_listen_handler.cpp src/http_event_engine.cpp src/lspider_types.cpp src/lthread.cpp src/moc_mysql_dumper.cpp src/mysql_dumper.cpp src/url_tools.cpp \
 				src/CrawlService.cpp src/http_processor.cpp src/link_scheduler.cpp src/moc_mysql_selector.cpp src/mysql_selector.cpp src/util.cpp \
-				src/extractor.cpp src/http_protocol.cpp src/link_table.cpp src/moc_extractor_worker_view.cpp src/mongo_dumper.cpp src/request_recv.cpp
+				src/extractor.cpp src/http_protocol.cpp src/link_table.cpp src/moc_extractor_worker_view.cpp src/mongo_dumper.cpp src/request_recv.cpp \
+				src/cmd_ctrler.cpp
 
 lspider_CPPFLAGS = $(QT_CPPFLAGS) $(MONGO_CLIENT_CPPFLAGS) \
 				 $(BOOST_CPPFLAGS) $(LOG4CPLUS_CPPFLAGS) $(LIBEVENT_CPPFLAGS) \
@@ -416,6 +418,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-CrawlService.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-cmd_ctrler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-conf.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-crawl_listen_handler.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/lspider-extractor.Po@am__quote@
@@ -844,6 +847,20 @@ lspider-request_recv.obj: src/request_recv.cpp
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/request_recv.cpp' object='lspider-request_recv.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-request_recv.obj `if test -f 'src/request_recv.cpp'; then $(CYGPATH_W) 'src/request_recv.cpp'; else $(CYGPATH_W) '$(srcdir)/src/request_recv.cpp'; fi`
+
+lspider-cmd_ctrler.o: src/cmd_ctrler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-cmd_ctrler.o -MD -MP -MF $(DEPDIR)/lspider-cmd_ctrler.Tpo -c -o lspider-cmd_ctrler.o `test -f 'src/cmd_ctrler.cpp' || echo '$(srcdir)/'`src/cmd_ctrler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-cmd_ctrler.Tpo $(DEPDIR)/lspider-cmd_ctrler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/cmd_ctrler.cpp' object='lspider-cmd_ctrler.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-cmd_ctrler.o `test -f 'src/cmd_ctrler.cpp' || echo '$(srcdir)/'`src/cmd_ctrler.cpp
+
+lspider-cmd_ctrler.obj: src/cmd_ctrler.cpp
+@am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider-cmd_ctrler.obj -MD -MP -MF $(DEPDIR)/lspider-cmd_ctrler.Tpo -c -o lspider-cmd_ctrler.obj `if test -f 'src/cmd_ctrler.cpp'; then $(CYGPATH_W) 'src/cmd_ctrler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/cmd_ctrler.cpp'; fi`
+@am__fastdepCXX_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/lspider-cmd_ctrler.Tpo $(DEPDIR)/lspider-cmd_ctrler.Po
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	$(AM_V_CXX)source='src/cmd_ctrler.cpp' object='lspider-cmd_ctrler.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCXX_FALSE@	DEPDIR=$(DEPDIR) $(CXXDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCXX_FALSE@	$(AM_V_CXX@am__nodep@)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -c -o lspider-cmd_ctrler.obj `if test -f 'src/cmd_ctrler.cpp'; then $(CYGPATH_W) 'src/cmd_ctrler.cpp'; else $(CYGPATH_W) '$(srcdir)/src/cmd_ctrler.cpp'; fi`
 
 lspider_client-lspider_client.o: src/lspider_client.cpp
 @am__fastdepCXX_TRUE@	$(AM_V_CXX)$(CXX) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(lspider_client_CPPFLAGS) $(CPPFLAGS) $(AM_CXXFLAGS) $(CXXFLAGS) -MT lspider_client-lspider_client.o -MD -MP -MF $(DEPDIR)/lspider_client-lspider_client.Tpo -c -o lspider_client-lspider_client.o `test -f 'src/lspider_client.cpp' || echo '$(srcdir)/'`src/lspider_client.cpp

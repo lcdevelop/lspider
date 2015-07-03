@@ -67,6 +67,7 @@ void HttpProcessor::run()
         }
         if (connect(urlContext) < 0) {
             LOG_F(WARN, "%d [%s] connect fail", urlContext->uuid, urlContext->url.c_str());
+            onTimeout(urlContext);
         }
     }
 }

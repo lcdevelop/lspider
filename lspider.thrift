@@ -8,4 +8,5 @@ struct IUrl {
 
 service CrawlService {
     void request(1: IUrl u),
+    string exec_cmd(1: string cmd),
 }
