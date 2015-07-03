@@ -11,8 +11,9 @@
 #include "url_context.h"
 #include "crawl_listen_handler.h"
 
-CrawlListenHandler::CrawlListenHandler(HttpProcessor *httpProcessor)
-    :_httpProcessor(httpProcessor)
+CrawlListenHandler::CrawlListenHandler(HttpProcessor *httpProcessor, CmdCtrler *cmdCtroler)
+    :_httpProcessor(httpProcessor), _cmdCtrler(cmdCtroler)
+
 {
 }
 

@@ -45,9 +45,15 @@ void CmdCtrler::control(string& response, const string& cmd)
         if ("" == level2cmd) {
             response = "must specific modle: request|http|mongodumper|mysqldumper";
         }
-    } else if ("stop" == level1cmd) {
+    } else if ("request" == level1cmd) {
+        _handlers["request"]->control(level2cmd + " " + level3cmd);
+    } else if ("http" == level1cmd) {
+        _handlers["http"]->control(level2cmd + " " + level3cmd);
+    } else if ("mongodumper" == level1cmd) {
+        _handlers["mongodumper"]->control(level2cmd + " " + level3cmd);
+    } else if ("mysqldumper" == level1cmd) {
+        _handlers["mysqldumper"]->control(level2cmd + " " + level3cmd);
     }
-
 }
 
 void CmdCtrler::addHandler(const string name, Controllable* controllable)

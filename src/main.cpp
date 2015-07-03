@@ -17,6 +17,7 @@
 #include "mysql_selector.h"
 #include "link_scheduler.h"
 #include "conf.h"
+#include "cmd_ctrler.h"
 
 int main(int argc, char ** argv)
 {
@@ -32,6 +33,8 @@ int main(int argc, char ** argv)
     }
 
     event_enable_debug_mode();
+
+    CmdCtrler *cmdCtrler = new CmdCtrler(&app);
 
     // 写mysql
     MySqlDumper *mySqlDumper = new MySqlDumper("linkdump");
@@ -55,11 +58,18 @@ int main(int argc, char ** argv)
     // http网络处理
     HttpProcessor *httpProcessor = new HttpProcessor(mongoDumper, extractor, "httpprocessor");
     // 请求接收监听
-    RequestRecv *recv = new RequestRecv(httpProcessor);
+    RequestRecv *recv = new RequestRecv(httpProcessor, cmdCtrler);
 
     // 链接调度
     LinkScheduler *linkScheduler = new LinkScheduler(httpProcessor);
     mySqlSelector->setLinkScheduler(linkScheduler);
+
+    cmdCtrler->addHandler("recv", recv);
+    cmdCtrler->addHandler("mysqlselector", mySqlSelector);
+    cmdCtrler->addHandler("linkscheduler", linkScheduler);
+    cmdCtrler->addHandler("mongodumper", mongoDumper);
+    cmdCtrler->addHandler("mysqldumper", mySqlDumper);
+    cmdCtrler->addHandler("extractor", extractor);
 
     mongoDumper->start();
     httpProcessor->start();

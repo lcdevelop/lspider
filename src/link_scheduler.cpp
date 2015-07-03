@@ -101,3 +101,7 @@ void LinkScheduler::on_print_state(evutil_socket_t sock, short event, void *arg)
     struct timeval t = {Conf::instance()->schedulerPrintStateInterval, 0 };
     evtimer_add(linkScheduler->_printStateEvent, &t);
 }
+
+void LinkScheduler::control(const string& cmd)
+{
+}

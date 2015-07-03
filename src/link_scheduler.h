@@ -11,9 +11,10 @@
 #include <QtCore/QThread>
 #include <evhttp.h>
 #include <event2/thread.h>
+#include "controllable.h"
 #include "link_table.h"
 
-class LinkScheduler : public QThread
+class LinkScheduler : public QThread, public Controllable
 {
     Q_OBJECT
 public:
@@ -22,6 +23,7 @@ public:
 
     virtual void run();
     void stop();
+    virtual void control(const string& cmd);
 
     LinkTable::RetType addUrl(UrlContext *urlContext);
     bool addIpSchedule(IpContext *ipContext);

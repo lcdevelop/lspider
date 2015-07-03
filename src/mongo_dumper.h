@@ -12,11 +12,12 @@
 #include "lthread.h"
 #include "synced_queue.h"
 #include "DoubleList.h"
+#include "controllable.h"
 #include "url_context.h"
 
 class MySqlDumper;
 
-class MongoDumper : public lthread::LThread
+class MongoDumper : public lthread::LThread, public Controllable
 {
 public:
     MongoDumper(MySqlDumper *mysqlDumper, std::string hostAndPort);
@@ -26,6 +27,7 @@ public:
     void stop();
 
     virtual void run();
+    virtual void control(const string& cmd);
 
     MySqlDumper * mysqlDumper();
 

@@ -14,6 +14,7 @@
 #include <QtSql/QSqlDatabase>
 #include "synced_queue.h"
 #include "DoubleList.h"
+#include "controllable.h"
 #include "mysql_base.h"
 
 using std::string;
@@ -21,7 +22,7 @@ using std::map;
 
 class UrlContext;
 
-class MySqlDumper : public QThread, public MySqlBase
+class MySqlDumper : public QThread, public MySqlBase, public Controllable
 {
     Q_OBJECT
 public:
@@ -32,6 +33,8 @@ public:
     virtual void stop();
 
     virtual void run();
+
+    virtual void control(const string& cmd);
 
     TSyncedQueue<UrlContext, TLinkedList<UrlContext> > waitDumpQueue; // 待写mongo队列
 

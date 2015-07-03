@@ -8,11 +8,15 @@
 #ifndef __CONTROLLABLE_H__
 #define __CONTROLLABLE_H__
 
+#include <string>
+
+using std::string;
+
 class Controllable
 {
 public:
     virtual ~Controllable();
-    virtual void control() = 0;
+    virtual void control(const string& cmd) = 0;
 };
 
 #endif //__CONTROLLABLE_H__

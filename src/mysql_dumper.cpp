@@ -241,3 +241,7 @@ void MySqlDumper::resetUpdateLinksCmd()
         + " WHERE sign IN (";
     _updateValueCount = 0;
 }
+
+void MySqlDumper::control(const string& cmd)
+{
+}

@@ -9,18 +9,22 @@
 #define __REQUEST_RECV_H__
 
 #include "lthread.h"
+#include "controllable.h"
 
 class HttpProcessor;
+class CmdCtrler;
 
-class RequestRecv : public lthread::LThread
+class RequestRecv : public lthread::LThread, public Controllable
 {
 public:
-    RequestRecv(HttpProcessor *httpProcessor);
+    RequestRecv(HttpProcessor *httpProcessor, CmdCtrler *cmdCtrler);
     virtual void run();
     void stop();
+    virtual void control(const string& cmd);
 
 private:
     HttpProcessor *_httpProcessor;
+    CmdCtrler *_cmdCtrler;
 };
 
 #endif

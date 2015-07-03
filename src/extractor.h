@@ -9,12 +9,13 @@
 #define __EXTRACTOR_H__
 
 #include "synced_queue.h"
+#include "controllable.h"
 #include "DoubleList.h"
 
 class ExtractorWorkerView;
 class UrlContext;
 
-class Extractor
+class Extractor : public Controllable
 {
 public:
     Extractor(ExtractorWorkerView *workerView);
@@ -24,6 +25,7 @@ public:
     void push(UrlContext *urlContext);
     UrlContext * pop();
     int queueSize();
+    virtual void control(const string& cmd);
 
 private:
     ExtractorWorkerView *_extractorWorkerView;

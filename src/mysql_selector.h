@@ -10,13 +10,14 @@
 
 #include <string>
 #include <QtCore/QThread>
+#include "controllable.h"
 #include "mysql_base.h"
 
 using std::string;
 
 class LinkScheduler;
 
-class MySqlSelector : public QThread, public MySqlBase
+class MySqlSelector : public QThread, public MySqlBase, public Controllable
 {
     Q_OBJECT
 public:
@@ -28,6 +29,8 @@ public:
     void recoverCrawlState();
 
     virtual void stop();
+
+    virtual void control(const string& cmd);
 
     /**
      * 线程执行函数

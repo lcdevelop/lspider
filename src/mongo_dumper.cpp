@@ -143,3 +143,7 @@ MySqlDumper * MongoDumper::mysqlDumper()
 {
     return _mysqlDumper;
 }
+
+void MongoDumper::control(const string& cmd)
+{
+}

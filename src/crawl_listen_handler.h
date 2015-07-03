@@ -35,7 +35,7 @@ class HttpProcessor;
  */
 class CrawlListenHandler : virtual public CrawlServiceIf {
 public:
-    CrawlListenHandler(HttpProcessor *httpProcessor);
+    CrawlListenHandler(HttpProcessor *httpProcessor, CmdCtrler *cmdCtrler);
 
     /**
      * RPC接口
