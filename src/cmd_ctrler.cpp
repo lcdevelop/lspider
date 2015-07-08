@@ -28,7 +28,6 @@ CmdCtrler::~CmdCtrler()
 
 void CmdCtrler::control(string& response, const string& cmd)
 {
-    LOG_F(FATAL, "%s", cmd.c_str());
     istringstream sscmd(cmd);
     string level1cmd;
     string level2cmd;
@@ -39,20 +38,26 @@ void CmdCtrler::control(string& response, const string& cmd)
 
     if ("help" == level1cmd) {
         if ("" == level2cmd) {
-            response = "command: help|state";
+            response = "command: help|show";
         }
-    } else if ("state" == level1cmd) {
-        if ("" == level2cmd) {
-            response = "must specific modle: request|http|mongodumper|mysqldumper";
+    } else if ("show" == level1cmd) {
+        if ("RequestRecv" == level2cmd) {
+            _handlers["RequestRecv"]->control(response, level3cmd);
+        } else if ("MySqlSelector" == level2cmd) {
+            _handlers["MySqlSelector"]->control(response, level3cmd);
+        } else if ("HttpProcessor" == level2cmd) {
+            _handlers["HttpProcessor"]->control(response, level3cmd);
+        } else if ("LinkScheduler" == level2cmd) {
+            _handlers["LinkScheduler"]->control(response, level3cmd);
+        } else if ("MongoDumper" == level2cmd) {
+            _handlers["MongoDumper"]->control(response, level3cmd);
+        } else if ("MySqlDumper" == level2cmd) {
+            _handlers["MySqlDumper"]->control(response, level3cmd);
+        } else if ("Extractor" == level2cmd) {
+            _handlers["Extractor"]->control(response, level3cmd);
+        } else {
+            response = "must specific modle: RequestRecv|MySqlSelector|HttpProcessor|LinkScheduler|MongoDumper|MySqlDumper|Extractor";
         }
-    } else if ("request" == level1cmd) {
-        _handlers["request"]->control(level2cmd + " " + level3cmd);
-    } else if ("http" == level1cmd) {
-        _handlers["http"]->control(level2cmd + " " + level3cmd);
-    } else if ("mongodumper" == level1cmd) {
-        _handlers["mongodumper"]->control(level2cmd + " " + level3cmd);
-    } else if ("mysqldumper" == level1cmd) {
-        _handlers["mysqldumper"]->control(level2cmd + " " + level3cmd);
     }
 }
 

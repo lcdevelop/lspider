@@ -34,7 +34,7 @@ public:
 
     virtual void run();
 
-    virtual void control(const string& cmd);
+    virtual void control(string& response, const string& cmd);
 
     TSyncedQueue<UrlContext, TLinkedList<UrlContext> > waitDumpQueue; // 待写mongo队列
 
@@ -56,6 +56,7 @@ private:
     QString _updateLinksCmd;
     int _insertValueCount;
     int _updateValueCount;
+    volatile int _dumpCount;
 };
 
 #endif //__MYSQL_DUMPER_H__

@@ -25,7 +25,7 @@ public:
     void push(UrlContext *urlContext);
     UrlContext * pop();
     int queueSize();
-    virtual void control(const string& cmd);
+    virtual void control(string& response, const string& cmd);
 
 private:
     ExtractorWorkerView *_extractorWorkerView;

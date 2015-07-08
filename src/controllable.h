@@ -16,7 +16,7 @@ class Controllable
 {
 public:
     virtual ~Controllable();
-    virtual void control(const string& cmd) = 0;
+    virtual void control(string& response, const string& cmd) = 0;
 };
 
 #endif //__CONTROLLABLE_H__

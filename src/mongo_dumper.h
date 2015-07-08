@@ -27,7 +27,7 @@ public:
     void stop();
 
     virtual void run();
-    virtual void control(const string& cmd);
+    virtual void control(string& response, const string& cmd);
 
     MySqlDumper * mysqlDumper();
 
@@ -43,6 +43,8 @@ private:
     std::string _hostAndPort;
     bool _isStop;
     static const std::string _db;
+    volatile int _dumpSuccCount;
+    volatile int _dumpFailCount;
 };
 
 #endif //__MONGO_DUMPER_H__

@@ -24,10 +24,17 @@ UrlContext::UrlContext()
     linkDepth = 0;
 
     init();
+    LOG_F(DEBUG, "%d [%s] construct", uuid, url.c_str());
 }
 
 UrlContext::~UrlContext()
 {
+    LOG_F(DEBUG, "%d [%s] deconstruct", uuid, url.c_str());
+    if (DELETED == status) {
+        string backtrace = get_backtrace();
+        LOG_F(FATAL, "%d [%s] double free %s", uuid, url.c_str(), backtrace.c_str());
+    }
+    status = DELETED;
 }
 
 void UrlContext::init()

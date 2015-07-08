@@ -140,6 +140,32 @@ void LinkTable::printState()
     LOG(DEBUG, "---------------- end state ------------------");
 }
 
+string LinkTable::getState()
+{
+    string state;
+    pthread_mutex_lock(&_mutex);
+    IpTable::const_iterator table_iter = _ipTable.begin();
+    for (; _ipTable.end() != table_iter; ++table_iter) {
+        state += "ip:";
+        state += table_iter->first;
+        state += "\n";
+        IpContext *ipContext = table_iter->second;
+        SiteTable::const_iterator ip_iter = ipContext->siteTable.begin();
+        for (; ipContext->siteTable.end() != ip_iter; ++ip_iter) {
+            SiteContext *siteContext = ip_iter->second;
+            state += "\tsite:";
+            state += ip_iter->first;
+            state += " urlcount=";
+            char tableSizeStr[32];
+            snprintf(tableSizeStr, 32, "%lu",  siteContext->urlTable.size());
+            state += tableSizeStr;
+            state += "\n";
+        }
+    }
+    pthread_mutex_unlock(&_mutex);
+    return state;
+}
+
 LinkScheduler* LinkTable::getLinkScheduler()
 {
     return _linkScheduler;

@@ -17,7 +17,7 @@
 #include "url_context.h"
 
 MySqlDumper::MySqlDumper(string connectionName)
-    :MySqlBase(connectionName)
+    :MySqlBase(connectionName), _dumpCount(0)
 {
     _isStop = false;
     resetInsertLinksCmd();
@@ -183,6 +183,7 @@ bool MySqlDumper::flushInsert()
     QSqlQuery query(_db);
     _insertLinksCmd.remove(_insertLinksCmd.length()-1, 1);
     query.prepare(_insertLinksCmd);
+    atomic_add(&_dumpCount, _insertValueCount);
     if (false == query.exec()) {
         QSqlError err = query.lastError();
         // 重复key不打log
@@ -242,6 +243,10 @@ void MySqlDumper::resetUpdateLinksCmd()
     _updateValueCount = 0;
 }
 
-void MySqlDumper::control(const string& cmd)
+void MySqlDumper::control(string& response, const string& cmd)
 {
+    char msg[1024] = {'\0'};
+    snprintf(msg, 1024, "MySqlDumper dumpCount:%d",
+             _dumpCount);
+    response = msg;
 }

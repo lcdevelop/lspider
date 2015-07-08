@@ -94,6 +94,7 @@ public:
                            UrlContext* &urlContext);
     int count() const;
     void printState();
+    string getState();
 
     LinkScheduler* getLinkScheduler();
 

@@ -28,6 +28,7 @@ using boost::shared_ptr;
 using namespace  ::lspider;
 
 class HttpProcessor;
+class RequestRecv;
 
 /**
  * 抓取器抓取服务的网络请求处理逻辑
@@ -35,7 +36,9 @@ class HttpProcessor;
  */
 class CrawlListenHandler : virtual public CrawlServiceIf {
 public:
-    CrawlListenHandler(HttpProcessor *httpProcessor, CmdCtrler *cmdCtrler);
+    CrawlListenHandler(HttpProcessor *httpProcessor,
+                       RequestRecv *requestRecv,
+                       CmdCtrler *cmdCtrler);
 
     /**
      * RPC接口
@@ -45,6 +48,7 @@ public:
 
 private:
     HttpProcessor *_httpProcessor; // 传递指针
+    RequestRecv *_requestRecv;
     CmdCtrler *_cmdCtrler;
 };
 

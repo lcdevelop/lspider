@@ -5,6 +5,7 @@
  * Description: 
  ************************************************************************/
 
+#include <execinfo.h>
 #include "util.h"
 
 /**
@@ -297,4 +298,65 @@ bool to_utf8(const char* source_str, const size_t len, std::string & target_str)
 bool to_utf8(std::string &str)
 {
     return to_utf8(str.c_str(), str.length(), str);
+}
+
+size_t get_executable_path( char* processdir,char* processname, size_t len)
+{
+    char* path_end;
+    if(readlink("/proc/self/exe", processdir,len) <=0)
+        return -1;
+    path_end = strrchr(processdir,  '/');
+    if(path_end == NULL)
+        return -1;
+    ++path_end;
+    strcpy(processname, path_end);
+    *path_end = '\0';
+    return (size_t)(path_end - processdir);
+}
+
+string get_backtrace_line(int nptrs, void *buffer[100], const char *program)
+{
+    string result;
+    char cmd[512];
+    int len = snprintf(cmd, sizeof(cmd),
+                               "addr2line -ifsC -e %s", program);
+    char *p = cmd + len;
+    size_t s = sizeof(cmd) - len;
+    for(int i = 0; i < nptrs; ++i) {
+        if(s > 0) {
+            len = snprintf(p, s, " %p", buffer[i]);
+            p += len;
+            s -= len;
+        }
+    }
+    FILE *fp;
+    char buf[128];
+    if((fp = popen(cmd, "r"))) {
+        while(fgets(buf, sizeof(buf), fp)) {
+            buf[strlen(buf)-1] = '\0';
+            result += "[";
+            result += buf;
+            result += "] ";
+        }
+        pclose(fp);
+    }
+
+    return result;
+}
+
+string get_backtrace()
+{
+    char path[MAX_PATH_LEN] = {'\0'};
+    char processname[1024] = {'\0'};
+    get_executable_path(path, processname, sizeof(path));
+    string processpath = string(path) + string(processname);
+
+    int nptrs;
+    void *buffer[100];
+    char **strings;
+    nptrs = backtrace(buffer, 100);
+    strings = backtrace_symbols(buffer, nptrs);
+    string result = get_backtrace_line(nptrs, buffer, processpath.c_str());
+    free(strings);
+    return result;
 }

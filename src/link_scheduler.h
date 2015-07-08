@@ -23,7 +23,7 @@ public:
 
     virtual void run();
     void stop();
-    virtual void control(const string& cmd);
+    virtual void control(string& response, const string& cmd);
 
     LinkTable::RetType addUrl(UrlContext *urlContext);
     bool addIpSchedule(IpContext *ipContext);

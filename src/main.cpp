@@ -64,12 +64,13 @@ int main(int argc, char ** argv)
     LinkScheduler *linkScheduler = new LinkScheduler(httpProcessor);
     mySqlSelector->setLinkScheduler(linkScheduler);
 
-    cmdCtrler->addHandler("recv", recv);
-    cmdCtrler->addHandler("mysqlselector", mySqlSelector);
-    cmdCtrler->addHandler("linkscheduler", linkScheduler);
-    cmdCtrler->addHandler("mongodumper", mongoDumper);
-    cmdCtrler->addHandler("mysqldumper", mySqlDumper);
-    cmdCtrler->addHandler("extractor", extractor);
+    cmdCtrler->addHandler("RequestRecv", recv);
+    cmdCtrler->addHandler("MySqlSelector", mySqlSelector);
+    cmdCtrler->addHandler("HttpProcessor", httpProcessor);
+    cmdCtrler->addHandler("LinkScheduler", linkScheduler);
+    cmdCtrler->addHandler("MongoDumper", mongoDumper);
+    cmdCtrler->addHandler("MySqlDumper", mySqlDumper);
+    cmdCtrler->addHandler("Extractor", extractor);
 
     mongoDumper->start();
     httpProcessor->start();

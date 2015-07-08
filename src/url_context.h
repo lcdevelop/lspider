@@ -51,7 +51,8 @@ public:
         RECVING, // 正在接受数据
         DONE, // 抓取完成
         TIMEOUT, // 抓取超时
-        PROTERR // 协议错误
+        PROTERR, // 协议错误
+        DELETED // 已delete
     } StatusType;
 
     UrlContext();

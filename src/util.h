@@ -21,6 +21,8 @@
 #include <fcntl.h>
 #include <zlib.h>
 
+#define MAX_PATH_LEN 1024
+
 using std::string;
 using std::vector;
 
@@ -57,5 +59,11 @@ bool is_utf8(const char* str);
 bool to_utf8(const char* source_str, const size_t len, string & target_str);
 
 bool to_utf8(string &str);
+
+size_t get_executable_path( char* processdir,char* processname, size_t len);
+
+string get_backtrace_line(int nptrs, void *buffer[100], const char *program);
+
+string get_backtrace();
 
 #endif

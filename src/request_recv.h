@@ -20,11 +20,13 @@ public:
     RequestRecv(HttpProcessor *httpProcessor, CmdCtrler *cmdCtrler);
     virtual void run();
     void stop();
-    virtual void control(const string& cmd);
+    void addRequestCount();
+    virtual void control(string& response, const string& cmd);
 
 private:
     HttpProcessor *_httpProcessor;
     CmdCtrler *_cmdCtrler;
+    volatile int _requestCount;
 };
 
 #endif

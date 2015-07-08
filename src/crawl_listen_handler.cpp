@@ -9,10 +9,13 @@
 #include "logger_container.h"
 #include "http_processor.h"
 #include "url_context.h"
+#include "request_recv.h"
 #include "crawl_listen_handler.h"
 
-CrawlListenHandler::CrawlListenHandler(HttpProcessor *httpProcessor, CmdCtrler *cmdCtroler)
-    :_httpProcessor(httpProcessor), _cmdCtrler(cmdCtroler)
+CrawlListenHandler::CrawlListenHandler(HttpProcessor *httpProcessor,
+                                       RequestRecv *requestRecv,
+                                       CmdCtrler *cmdCtroler)
+    :_httpProcessor(httpProcessor), _requestRecv(requestRecv), _cmdCtrler(cmdCtroler)
 
 {
 }
@@ -32,6 +35,7 @@ void CrawlListenHandler::request(const IUrl& u)
     uint64_t sign = get_url_sign64(u.str.c_str());
     snprintf(urlContext->sign, MAX_SIGN_LEN, "%lu", sign);
 
+    _requestRecv->addRequestCount();
     _httpProcessor->pushConnectQueue(urlContext);
 }
 

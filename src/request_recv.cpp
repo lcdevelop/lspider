@@ -14,7 +14,7 @@
 #include "request_recv.h"
 
 RequestRecv::RequestRecv(HttpProcessor *httpProcessor, CmdCtrler *cmdCtrler)
-    :_httpProcessor(httpProcessor), _cmdCtrler(cmdCtrler)
+    :_httpProcessor(httpProcessor), _cmdCtrler(cmdCtrler), _requestCount(0)
 {
 }
 
@@ -22,7 +22,7 @@ void RequestRecv::run()
 {
     LOG(INFO, "start");
     int port = 9090;
-    shared_ptr<CrawlListenHandler> handler(new CrawlListenHandler(_httpProcessor, _cmdCtrler));
+    shared_ptr<CrawlListenHandler> handler(new CrawlListenHandler(_httpProcessor, this, _cmdCtrler));
     shared_ptr<TProcessor> processor(new CrawlServiceProcessor(handler));
     shared_ptr<TServerTransport> serverTransport(new TServerSocket(port));
     shared_ptr<TTransportFactory> transportFactory(new TBufferedTransportFactory());
@@ -46,6 +46,14 @@ void RequestRecv::stop()
     this->terminate();
 }
 
-void RequestRecv::control(const string& cmd)
+void RequestRecv::addRequestCount()
 {
+    atomic_add(&_requestCount, 1);
+}
+
+void RequestRecv::control(string& response, const string& cmd)
+{
+    char msg[1024] = {'\0'};
+    snprintf(msg, 1024, "requestCount:%d", _requestCount);
+    response = string(msg);
 }

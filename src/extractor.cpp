@@ -41,6 +41,7 @@ int Extractor::queueSize()
     return _waitExtractQueue.size();
 }
 
-void Extractor::control(const string& cmd)
+void Extractor::control(string& response, const string& cmd)
 {
+    LOG(DEBUG, "");
 }

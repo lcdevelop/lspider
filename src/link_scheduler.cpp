@@ -102,6 +102,7 @@ void LinkScheduler::on_print_state(evutil_socket_t sock, short event, void *arg)
     evtimer_add(linkScheduler->_printStateEvent, &t);
 }
 
-void LinkScheduler::control(const string& cmd)
+void LinkScheduler::control(string& response, const string& cmd)
 {
+    response = _linkTable.getState();
 }

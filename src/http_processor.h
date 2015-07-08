@@ -13,6 +13,7 @@
 #include "synced_queue.h"
 #include "locked_queue.h"
 #include "DoubleList.h"
+#include "controllable.h"
 #include "mysql_base.h"
 
 using std::string;
@@ -25,7 +26,7 @@ class UrlContext;
 /**
  * http协议处理，网络收发数据
  */
-class HttpProcessor : public lthread::LThread, public MySqlBase
+class HttpProcessor : public lthread::LThread, public MySqlBase, public Controllable
 {
 public:
     typedef enum {
@@ -43,6 +44,7 @@ public:
 
     virtual void run();
     void stop();
+    virtual void control(string& response, const string& cmd);
 
     /**
      * 收到完整网页包后回调
@@ -83,6 +85,8 @@ private:
     bool _isStop;
 
     volatile int _concCount;
+    volatile int _tryProcCount;
+    volatile int _procFinishCount;
 };
 
 #endif

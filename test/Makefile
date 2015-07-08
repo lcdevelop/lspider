@@ -1,19 +1,28 @@
-all : test_util test_qtextcodec
+all : test_util test_qtextcodec test_backtrace
 
 test_util : test_util.o util.o
-	g++ -o test_util test_util.o util.o -lz
+	g++ -g -o test_util test_util.o util.o -lz
 
 test_qtextcodec : test_qtextcodec.o
-	g++ -o test_qtextcodec test_qtextcodec.o -L /usr/lib64/ -lQt5Core
+	g++ -g -o test_qtextcodec test_qtextcodec.o -L /usr/lib64/ -lQt5Core
+
+test_backtrace : test_backtrace.o
+	g++ -g -o test_backtrace test_backtrace.o -rdynamic -ldl
+
+
+
 
 test_util.o : test_util.cpp
-	g++ -c -o test_util.o test_util.cpp -I ../src/
+	g++ -c -g -o test_util.o test_util.cpp -I ../src/
 
 util.o : ../src/util.cpp
-	g++ -c -o util.o ../src/util.cpp
+	g++ -c -g -o util.o ../src/util.cpp
 
 test_qtextcodec.o : test_qtextcodec.cpp
-	g++ -c -o test_qtextcodec.o test_qtextcodec.cpp -I /usr/include/qt5/ -fPIC
+	g++ -c -g -o test_qtextcodec.o test_qtextcodec.cpp -I /usr/include/qt5/ -fPIC
+
+test_backtrace.o : test_backtrace.cpp
+	g++ -c -g -o test_backtrace.o test_backtrace.cpp
 
 clean :
-	rm -f *.o test_util test_qtextcodec
+	rm -f *.o test_util test_qtextcodec test_backtrace

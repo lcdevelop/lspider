@@ -15,7 +15,8 @@ using namespace mongo;
 const std::string MongoDumper::_db = "lspider.pages";
 
 MongoDumper::MongoDumper(MySqlDumper *mysqlDumper, std::string hostAndPort)
-    :_mysqlDumper(mysqlDumper), _hostAndPort(hostAndPort), _isStop(false)
+    :_mysqlDumper(mysqlDumper), _hostAndPort(hostAndPort), _isStop(false),
+    _dumpSuccCount(0), _dumpFailCount(0)
 {
 }
 
@@ -65,12 +66,14 @@ bool MongoDumper::dump(UrlContext *urlContext)
                      data.obj(),
                      true);
         if ("" == _conn.getLastError(_db)) {
+            atomic_add(&_dumpSuccCount, 1);
             LOG_F(INFO, "%d [%s] dump mongo success [sign=%s]",
                   urlContext->uuid,
                   urlContext->url.c_str(),
                   urlContext->sign);
             return true;
         } else {
+            atomic_add(&_dumpFailCount, 1);
             LOG_F(WARN, "%d [%s] dump mongo fail",
                   urlContext->uuid,
                   urlContext->url.c_str());
@@ -144,6 +147,10 @@ MySqlDumper * MongoDumper::mysqlDumper()
     return _mysqlDumper;
 }
 
-void MongoDumper::control(const string& cmd)
+void MongoDumper::control(string& response, const string& cmd)
 {
+    char msg[1024] = {'\0'};
+    snprintf(msg, 1024, "MongoDumper successCount:%d failCount:%d",
+             _dumpSuccCount, _dumpFailCount);
+    response = msg;
 }

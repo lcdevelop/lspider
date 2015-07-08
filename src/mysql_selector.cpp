@@ -189,6 +189,6 @@ bool MySqlSelector::select()
     }
 }
 
-void MySqlSelector::control(const string& cmd)
+void MySqlSelector::control(string& response, const string& cmd)
 {
 }

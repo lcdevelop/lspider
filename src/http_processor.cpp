@@ -24,7 +24,7 @@
 
 
 HttpProcessor::HttpProcessor(MongoDumper* mongoDumper, Extractor *extractor, string connectionName)
-    :MySqlBase(connectionName)
+    :MySqlBase(connectionName), _tryProcCount(0), _procFinishCount(0)
 {
     _concCount = 0;
     _isStop = false;
@@ -62,12 +62,13 @@ void HttpProcessor::run()
     while (!_isStop) {
         // 取队列，发起连接
         UrlContext *urlContext = waitConnectQueue.pop_front();
+        atomic_add(&_tryProcCount, 1);
         while (_concCount > Conf::instance()->httpMaxConcurrence) {
             usleep(5000);
         }
         if (connect(urlContext) < 0) {
             LOG_F(WARN, "%d [%s] connect fail", urlContext->uuid, urlContext->url.c_str());
-            onTimeout(urlContext);
+            delete urlContext;
         }
     }
 }
@@ -97,24 +98,27 @@ int HttpProcessor::connect(UrlContext *urlContext)
         return -1;
     }
 
-    LOG_F(DEBUG, "%d [%s] connect to %s %s", urlContext->uuid, urlContext->url.c_str(), urlContext->ip.c_str(), urlContext->host);
+    LOG_F(DEBUG, "%d [%s] connect to %s %s sock=%d",
+          urlContext->uuid, urlContext->url.c_str(), urlContext->ip.c_str(), urlContext->host,
+          urlContext->sock);
 
     // 创建事件
     urlContext->httpProcessor = this;
     urlContext->base = _engine->base;
     urlContext->event = event_new(_engine->base, urlContext->sock, EV_WRITE | EV_ET | EV_TIMEOUT, on_connected, (void*)urlContext);
 
-    // 事件注册到IO事件模型
-    struct timeval t = {Conf::instance()->httpConnectTimeout, 0 };
-    event_add(urlContext->event, &t);
-
     // 非阻塞连接
     if (::connect(urlContext->sock, (const struct sockaddr *) & serv_addr, (socklen_t)sizeof (sockaddr)) < 0) {
         if(errno != EINPROGRESS) {
-            LOG_F(WARN, "%d [%s] connect error %s", urlContext->uuid, urlContext->url.c_str(), strerror(errno));
+            LOG_F(WARN, "%d [%s] connect error %s sock=%d",
+                  urlContext->uuid, urlContext->url.c_str(), strerror(errno), urlContext->sock);
             return -1;
         }
     }
+
+    // 事件注册到IO事件模型
+    struct timeval t = {Conf::instance()->httpConnectTimeout, 0 };
+    event_add(urlContext->event, &t);
 
     return 0;
 }
@@ -131,7 +135,10 @@ void HttpProcessor::on_connected(int sock, short event, void* arg)
         assert(sock == urlContext->sock);
 
         // 更新状态
-        assert(urlContext->status == UrlContext::CONNECTING);
+        if (urlContext->status != UrlContext::CONNECTING) {
+            LOG_F(FATAL, "%d [%s] status error sock=%d", urlContext->uuid, urlContext->url.c_str(), urlContext->sock);
+            return;
+        }
         urlContext->status = UrlContext::SENDING;
 
         // 连接成功马上就尝试发请求
@@ -182,7 +189,7 @@ void HttpProcessor::doWithSend(UrlContext *urlContext)
         // 发送完成马上尝试接收数据
         this->doWithRecv(urlContext);
     } else if (E_ERR == ret) {
-        LOG_F(WARN, "%d [%s] send error", urlContext->uuid, urlContext->url.c_str());
+        LOG_F(WARN, "%d [%s] send error sock=%d", urlContext->uuid, urlContext->url.c_str(), urlContext->sock);
         event_del(urlContext->event);
         event_free(urlContext->event);
         close(urlContext->sock);
@@ -228,6 +235,7 @@ void HttpProcessor::doWithSockTimeout(UrlContext *urlContext)
     event_free(urlContext->event);
     close(urlContext->sock);
     gettimeofday(&urlContext->finishTime, NULL);
+    atomic_add(&_concCount, -1);
     urlContext->httpProcessor->onTimeout(urlContext);
 }
 
@@ -285,6 +293,7 @@ HttpProcessor::SndRcvRetType HttpProcessor::tryRecv(UrlContext *urlContext)
 
 void HttpProcessor::doWithCrawlDone(UrlContext *urlContext)
 {
+    LOG_F(DEBUG, "%d [%s] call doWithCrawlDone", urlContext->uuid, urlContext->url.c_str());
     bool canDump = false;
     urlContext->crawlElapse = TIME_DIFF(urlContext->beginConnectTime, urlContext->finishTime);
     std::string statusStr = "";
@@ -331,6 +340,7 @@ void HttpProcessor::doWithCrawlDone(UrlContext *urlContext)
         delete urlContext;
     }
     atomic_add(&_concCount, -1);
+    atomic_add(&_procFinishCount, 1);
 }
 
 bool HttpProcessor::doWithRedirect(UrlContext *urlContext)
@@ -400,7 +410,6 @@ void HttpProcessor::onTimeout(UrlContext *urlContext)
         LOG_F(DEBUG, "%d [%s] ready to retry", urlContext->uuid, urlContext->url.c_str());
         urlContext->init();
         urlContext->httpProcessor->waitConnectQueue.push_back(urlContext);
-        atomic_add(&_concCount, -1);
     } else {
         urlContext->status = UrlContext::TIMEOUT;
         urlContext->recvData = "";
@@ -411,6 +420,7 @@ void HttpProcessor::onTimeout(UrlContext *urlContext)
 void HttpProcessor::onBroken(UrlContext *urlContext)
 {
     LOG_F(WARN, "%d [%s]", urlContext->uuid, urlContext->url.c_str());
+    atomic_add(&_concCount, -1);
     onTimeout(urlContext);
 }
 
@@ -474,4 +484,15 @@ void HttpProcessor::printState()
           "mysqlWaitDumpQueueSize=%d",
           _concCount, waitConnectQueue.size(), _extractor->queueSize(),
           _mongoDumper->waitDumpQueue.size(), _mongoDumper->mysqlDumper()->waitDumpQueue.size());
+}
+
+void HttpProcessor::control(string& response, const string& cmd)
+{
+    char msg[1024];
+    snprintf(msg, 1024, "concurrence:%d waitConnectQueueSize:%d tryProcCount:%d procFinishCount:%d",
+             _concCount,
+             waitConnectQueue.size(),
+             _tryProcCount,
+             _procFinishCount);
+    response = string(msg);
 }

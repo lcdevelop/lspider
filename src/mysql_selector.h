@@ -30,7 +30,7 @@ public:
 
     virtual void stop();
 
-    virtual void control(const string& cmd);
+    virtual void control(string& response, const string& cmd);
 
     /**
      * 线程执行函数
