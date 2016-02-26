@@ -119,7 +119,7 @@ Linux下的轻量级网页抓取系统
 
 ### 1.从github下载并编译
 
-`git clone git@git.coding.net:RichardLi/lspider.git`
+`git clone https://github.com/warmheartli/lspider.git`
 
 ### 2.编译安装
 
